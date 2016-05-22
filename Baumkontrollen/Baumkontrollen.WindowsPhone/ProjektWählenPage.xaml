@@ -1,0 +1,81 @@
+﻿<Page
+    x:Class="Baumkontrollen.ProjektWählenPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Baumkontrollen"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    
+    <StackPanel Orientation="Vertical">
+        <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Projekt Wählen" VerticalAlignment="Top" FontSize="40" Width="272"/>
+        <StackPanel Orientation="Horizontal" Margin="0,50,0,0">
+            <AppBarButton x:Name="button_projekt_löschen" Margin="0,0,0,-20"  HorizontalAlignment="Left" Icon="Delete" Label=""  VerticalAlignment="Bottom" Click="button_projekt_löschen_Click"/>
+            <ComboBox x:Name="combo_projekt" VerticalAlignment="Bottom" Width="250" Header="Projekt"  SelectionChanged="combo_projekt_SelectionChanged"/>
+            <TextBox x:Name="textbox_projekt" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="250" Header="Projekt"  Visibility="Collapsed"/>
+            <AppBarButton x:Name="button_projekt_hinzufügen" Margin="0,0,0,-20"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Icon="Add" Label=""   Click="button_projekt_hinzufügen_Click"/>
+        </StackPanel>
+        <Grid Margin="80,0,0,0" HorizontalAlignment="Left" Width="250">
+            <Button x:Name="button_projekt_hinzufügen_bestätigen" Content="Bestätigen" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="124" Visibility="Collapsed" Click="button_projekt_hinzufügen_bestätigen_Click" >
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout x:Name="flyout_falsche_eingabe">
+
+                        <StackPanel Orientation="Horizontal">
+                            <AppBarButton>
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="!"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <TextBlock x:Name="text_in_projektflyout_projekt_doppelt" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Visibility="Collapsed" >
+                                Es wurde bereits ein Projekt mit dem Namen:
+                                <LineBreak/>                        
+                                "<Run x:Name="texteingabe_projekt"/>"                             
+                                angelegt.
+                            </TextBlock>
+                            <TextBlock x:Name="text_in_projektflyout_keine_eingabe" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Visibility="Collapsed" >
+                                Es muss ein Projektname angegeben werden!
+                            </TextBlock>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </Button>
+            <Button x:Name="button_projekt_hinzufügen_abbrechen" Content="Abbrechen" HorizontalAlignment="Right" VerticalAlignment="Top" Width="114" Visibility="Collapsed" Click="button_projekt_hinzufügen_abbrechen_Click"/>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" Margin="0,100,0,0">
+            <AppBarButton x:Name="button_benutzer_löschen" Margin="0,0,0,-20" HorizontalAlignment="Left" Icon="Delete" Label=""  VerticalAlignment="Bottom" Click="button_benutzer_löschen_Click" />
+            <ComboBox x:Name="combo_benutzer"  HorizontalAlignment="Center"  VerticalAlignment="Top" Width="250" Header="Benutzer" AllowDrop="True" SelectionChanged="combo_benutzer_SelectionChanged"/>
+            <TextBox x:Name="textbox_benutzer"   HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="250" Header="Benutzer"  Visibility="Collapsed"/>
+            <AppBarButton x:Name="button_benutzer_hinzufügen" Margin="0,0,0,-20" HorizontalAlignment="Left" Icon="Add" Label=""  VerticalAlignment="Bottom"  RenderTransformOrigin="0.873,0.928" Click="button_benutzer_hinzufügen_Click"/>
+        </StackPanel>
+        <Grid Margin="80,0,0,0"  Width="250" HorizontalAlignment="Left">
+            <Button x:Name="button_benutzer_hinzufügen_bestätigen" Content="Bestätigen" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="124" Visibility="Collapsed" Click="button_benutzer_hinzufügen_bestätigen_Click" >
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout>
+                        <StackPanel Orientation="Horizontal">
+                            <AppBarButton>
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="!"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <TextBlock x:Name="text_in_benutzerflyout_benutzer_doppelt" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Visibility="Collapsed">
+                                Es gibt bereits einen Benutzer mit dem Namen:
+                                <LineBreak/>                        
+                                "<Run x:Name="texteingabe_benutzer"/>"                                                    
+                            </TextBlock>
+                            <TextBlock x:Name="text_in_benutzerflyout_keine_eingabe" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Visibility="Collapsed">
+                                Es muss ein Benutzername angegeben werden!
+                            </TextBlock>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </Button>
+
+            <Button x:Name="button_benutzer_hinzufügen_abbrechen" Content="Abbrechen" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="114" Visibility="Collapsed" Click="button_benutzer_hinzufügen_abbrechen_Click" />
+           
+        </Grid>
+    </StackPanel>
+
+</Page>

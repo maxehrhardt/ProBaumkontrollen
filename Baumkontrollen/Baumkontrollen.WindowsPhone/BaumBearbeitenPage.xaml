@@ -1,0 +1,267 @@
+﻿<Page
+    x:Class="Baumkontrollen.BaumBearbeitenPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Baumkontrollen"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal">
+            <AppBarButton x:Name="button_speichern" Icon="Save" Label="Speichern" Click="button_speichern_Click" >
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout x:Name="flyout_baum_speichern_falsche_eingabe">
+                        <StackPanel Orientation="Horizontal">
+                            <AppBarButton x:Name="icon_baum_speichern_fehler" Visibility="Collapsed">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="!"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>                        
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock x:Name="textbox_baum_speichern_fehler" TextWrapping="Wrap" Width="300" FontSize="20">
+                                    Der Baum mit der zugehörigen Kontrolle konnte nicht angelegt werden. Es sind folgende Fehler aufgetreten:
+                                    <LineBreak/>
+                                </TextBlock>
+                                <TextBlock x:Name="textbox_fehler_keine_straße" TextWrapping="Wrap" Width="300" FontSize="20" Visibility="Collapsed">
+                                    Es muss eine Straße ausgewählt werden.
+                                    <LineBreak/>
+                                </TextBlock>
+                                <TextBlock x:Name="textbox_fehler_keine_baumNr" TextWrapping="Wrap" Width="300" FontSize="20" Visibility="Collapsed">
+                                    Es muss eine Baumnummer eingegeben werden.
+                                    <LineBreak/>
+                                </TextBlock>
+                                <TextBlock x:Name="textbox_fehler_keine_baumart" TextWrapping="Wrap" Width="300" FontSize="20" Visibility="Collapsed">
+                                    Es muss eine Baumart ausgewählt werden.
+                                    <LineBreak/>
+                                </TextBlock>
+                                <TextBlock x:Name="textbox_fehler_keine_baumhöhe" TextWrapping="Wrap" Width="300" FontSize="20" Visibility="Collapsed">
+                                    Es muss eine Baumhöhe oder ein Baumhöhenbereich angegeben werden.
+                                    <LineBreak/>
+                                </TextBlock>
+                                <TextBlock x:Name="textbox_fehler_kein_stammdurchmesser" TextWrapping="Wrap" Width="300" FontSize="20" Visibility="Collapsed">
+                                    Es muss ein Stammdurchmesser angegeben werden.
+                                    <LineBreak/>
+                                </TextBlock>
+                                <TextBlock x:Name="textbox_fehler_keine_stammanzahl" TextWrapping="Wrap" Width="300" FontSize="20" Visibility="Collapsed">
+                                    Es muss eine Stammanzahl angegeben werden.
+                                    <LineBreak/>
+                                </TextBlock>
+                                <TextBlock x:Name="textbox_fehler_verkehrssicherheit_nicht_geändert" TextWrapping="Wrap" Width="300" FontSize="20" Visibility="Collapsed">
+                                    Die Eigenschaft: "Verkehrssicherheit" muss gesetzt werden.
+                                    <LineBreak/>
+                                </TextBlock>
+                                <TextBlock x:Name="textbox_fehler_baumart_nicht_gefunden" TextWrapping="Wrap" Width="300" FontSize="20" Visibility="Collapsed">
+                                    Die eingegebene Baumart wurde nicht gefunden. Wählen sie eine voreschlagene Baumart aus, oder erstellen sie eine neue mit dem "+"-Zeichen neben dem Textfeld.
+                                    <LineBreak/>
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </AppBarButton>
+            <AppBarButton x:Name="button_abbrechen" Icon="Cancel" Label="Abbrechen" Click="button_abbrechen_Click" />   
+            <AppBarButton x:Name="button_foto" Icon="Camera" Label="Foto" Visibility="Collapsed"/>
+
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Pivot x:Name="pivot_baum_bearbeiten" Title="Baum Bearbeiten">
+        <PivotItem Header="Baumdaten">
+            <ScrollViewer x:Name="scrollviewer_baumdaten" Height="500">
+                <StackPanel Height="940">
+                    <TextBox x:Name="textbox_benutzer" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="260" Header="Benutzer" IsReadOnly="True" />
+                    <TextBox x:Name="textbox_projekt" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="260" Header="Projekt" IsReadOnly="True"  />
+
+
+
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox x:Name="combo_straße" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="260" Header="Straße" SelectionChanged="combo_straße_SelectionChanged"/>
+                        <TextBox x:Name="textbox_straße" HorizontalAlignment="Left" Width="260" Visibility="Collapsed" Header="Straße"/>
+                        <AppBarButton x:Name="button_straße_hinzufügen" Icon="Add" Click="button_straße_hinzufügen_Click" VerticalAlignment="Bottom" Height="60" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" >
+                            <AppBarButton.RenderTransform>
+                                <CompositeTransform TranslateX="-10"/>
+                            </AppBarButton.RenderTransform>
+                        </AppBarButton>
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="130"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="button_straße_hinzufügen_bestätigen" Content="Bestätigen" Visibility="Collapsed" Grid.Column="0" HorizontalAlignment="Left" Click="button_straße_hinzufügen_bestätigen_Click" >
+                            <FlyoutBase.AttachedFlyout>
+                                <Flyout x:Name="flyout_falsche_eingabe">
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <AppBarButton>
+                                            <AppBarButton.Icon>
+                                                <FontIcon Glyph="!"/>
+                                            </AppBarButton.Icon>
+                                        </AppBarButton>
+                                        <TextBlock x:Name="text_in_straßenflyout_straße_doppelt"  TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Visibility="Collapsed" Width="250" >
+                                            Es wurde bereits ein Projekt mit dem Namen:
+                                             <LineBreak/>                        
+                                            "<Run x:Name="texteingabe_straße"/>"                             
+                                            angelegt.
+                                        </TextBlock>
+                                        <TextBlock x:Name="text_in_straßenflyout_keine_eingabe" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Visibility="Collapsed" Width="250">
+                                             Es muss ein gültiger Straßenname angegeben werden!
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Flyout>
+                            </FlyoutBase.AttachedFlyout>
+                        </Button>
+                        <Button x:Name="button_straße_hinzufügen_abbrechen" Content="Abbrechen" Visibility="Collapsed" Grid.Column="1"  HorizontalAlignment="Right" Click="button_straße_hinzufügen_abbrechen_Click"/>
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBox x:Name="textbox_baumNr" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Header="Baum Nr." Width="260" InputScope="Number" IsReadOnly="True"/>
+                        <AppBarButton x:Name="button_baumNr_plus" HorizontalAlignment="Left" Icon="Add"  VerticalAlignment="Bottom" Height="60" HorizontalContentAlignment="Left" Padding="0" Width="60" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0.5,0.5" Click="button_baumNr_plus_Click" >
+                            <AppBarButton.RenderTransform>
+                                <CompositeTransform TranslateX="-10"/>
+                            </AppBarButton.RenderTransform>
+                        </AppBarButton>
+                        <AppBarButton x:Name="button_baumNr_minus" HorizontalAlignment="Left" Icon="Remove"  VerticalAlignment="Bottom" Height="60" Width="61" RenderTransformOrigin="0.5,0.5" Click="button_baumNr_minus_Click">
+                            <AppBarButton.RenderTransform>
+                                <CompositeTransform TranslateX="-23"/>
+                            </AppBarButton.RenderTransform>
+                            <FlyoutBase.AttachedFlyout>
+                                <Flyout>
+                                    <StackPanel Orientation="Horizontal">
+                                        <AppBarButton>
+                                            <AppBarButton.Icon>
+                                                <FontIcon Glyph="!"/>
+                                            </AppBarButton.Icon>
+                                        </AppBarButton>
+                                        <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Height="auto" Width="305">
+                                            Es kann keine negative Baumnummer eingegeben werden!
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Flyout>
+                            </FlyoutBase.AttachedFlyout>
+                        </AppBarButton>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <TextBox x:Name="textbox_plakettenNr" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Header="Plaketten Nr." Width="260" InputScope="Number"/>
+                        <AppBarButton x:Name="button_plakettenNr_plus" HorizontalAlignment="Left" Icon="Add"  VerticalAlignment="Bottom" Height="60" HorizontalContentAlignment="Left" Padding="0" Width="60" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0.5,0.5" Click="button_plakettenNr_plus_Click">
+                            <AppBarButton.RenderTransform>
+                                <CompositeTransform TranslateX="-10"/>
+                            </AppBarButton.RenderTransform>
+                        </AppBarButton>
+                        <AppBarButton x:Name="button_plakettenNr_minus" HorizontalAlignment="Left" Icon="Remove"  VerticalAlignment="Bottom" Height="60" Width="61" RenderTransformOrigin="0.5,0.5" Click="button_plakettenNr_minus_Click">
+                            <AppBarButton.RenderTransform>
+                                <CompositeTransform TranslateX="-23"/>
+                            </AppBarButton.RenderTransform>
+                            <FlyoutBase.AttachedFlyout>
+                                <Flyout>
+                                    <StackPanel Orientation="Horizontal">
+                                        <AppBarButton>
+                                            <AppBarButton.Icon>
+                                                <FontIcon Glyph="!"/>
+                                            </AppBarButton.Icon>
+                                        </AppBarButton>
+                                        <TextBlock  TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Height="auto" Width="305">
+                                            Es kann keine negative Plakettennummer eingegeben werden!
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Flyout>
+                            </FlyoutBase.AttachedFlyout>
+                        </AppBarButton>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <AutoSuggestBox x:Name="autotext_baumart_deutsch" Width="260" Header="Baumart deutsch" HorizontalAlignment="Left" TextChanged="autotext_baumart_deutsch_TextChanged" GotFocus="autotext_baumart_deutsch_GotFocus" SuggestionChosen="autotext_baumart_deutsch_SuggestionChosen" />
+                            <AutoSuggestBox x:Name="autotext_baumart_botanisch" Header="Baumart botanisch" Width="260" HorizontalAlignment="Left" TextChanged="autotext_baumart_botanisch_TextChanged" GotFocus="autotext_baumart_botanisch_GotFocus" SuggestionChosen="autotext_baumart_botanisch_SuggestionChosen" />
+                        </StackPanel>
+                        <AppBarButton x:Name="button_baumart_hinzufügen" HorizontalAlignment="Left" Icon="Add"  VerticalAlignment="Center" Height="60" Click="button_baumart_hinzufügen_Click" />
+                    </StackPanel>
+
+
+                    <Border x:Name="border_baumart_hinzufügen" BorderBrush="Gray" BorderThickness="2,2,2,2" Width="265" HorizontalAlignment="Left" Visibility="Collapsed">
+                        <StackPanel>
+                            <TextBox x:Name="textbox_baumart_deutsch" Width="260" Header="Baumart Deutsch" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                            <TextBox x:Name="textbox_baumart_botanisch" Width="260" Header="Baumart Botanisch" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                            <Grid Width="260"  HorizontalAlignment="Left">
+                                <Button x:Name="button_baumart_hinzufügen_bestätigen" Content="Bestätigen" HorizontalAlignment="Left" Click="button_baumart_hinzufügen_bestätigen_Click">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <Flyout>
+                                            <StackPanel Orientation="Horizontal">
+                                                <AppBarButton>
+                                                    <AppBarButton.Icon>
+                                                        <FontIcon Glyph="!"/>
+                                                    </AppBarButton.Icon>
+                                                </AppBarButton>
+
+                                                <TextBlock  TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Width="260">
+                                                        Es muss wenigstens ein Name für die Baumart angegeben werden.
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Flyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </Button>
+                                <Button x:Name="button_baumart_hinzufügen_abbrechen" Content="Abbrechen" HorizontalAlignment="Right" Click="button_baumart_hinzufügen_abbrechen_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <ComboBox x:Name="combo_entwicklungsphase" Width="260" Header="Entwicklungsphase" HorizontalAlignment="Left"/>
+                    <TextBox x:Name="textbox_baumerstelldatum" TextWrapping="Wrap" Header="Datum" Width="260" HorizontalAlignment="Left" IsReadOnly="True"/>
+                    <TextBox x:Name="textbox_kontrollintervall" Header="Kontrollintervall (Jahre)" Width="260" HorizontalAlignment="Left" InputScope="Number" />
+                </StackPanel>
+            </ScrollViewer>
+        </PivotItem>
+
+        <PivotItem Header="Kontrolle">
+            <ScrollViewer Height="auto" MinHeight="350">
+
+                <StackPanel MinHeight="700">
+                    <TextBlock Text="Kontrolldatum" FontSize="30"/>
+                    <DatePicker x:Name="datepicker_kontrolldatum" Width="260" HorizontalAlignment="Left"/>
+                    
+                    <TextBlock Text="Abmessungen" FontSize="30" />
+
+                    <ComboBox x:Name="combo_baumhöhenbereich" Header="Baumhöhe Bereich (m)" HorizontalAlignment="Left" Width="260" Margin="0,10,0,0"/>
+                    <TextBox x:Name="textbox_baumhöhe"  TextWrapping="Wrap" Header="Baumhöhe Absolut (m)" Width="260" InputScope="Number" HorizontalAlignment="Left" Margin="0" TextChanged="textbox_baumhöhe_TextChanged"   />
+                    <TextBox x:Name="textbox_kronendurchmesser" Header="Kronendurchmesser (m)" Width="260" InputScope="Number"  HorizontalAlignment="Left" Margin="0"/>
+                    <TextBox x:Name="textbox_stammdurchmesser" Margin="0" TextWrapping="Wrap" Header="Stammdurchmesser (cm)" Width="260" InputScope="Number" HorizontalAlignment="Left"/>
+                    <TextBox x:Name="textbox_stammanzahl" Margin="0" TextWrapping="Wrap" Width="260" Header="Stammanzahl" InputScope="Number" HorizontalAlignment="Left"/>
+                    <TextBlock Margin="0,20,0,0"  Text="Zustand" FontSize="30"/>
+                    <ComboBox x:Name="combo_schädigungsgrad" Header="Schädigungsgrad" Width="260" HorizontalAlignment="Left"/>
+
+                    <TextBlock x:Name="header_kronenzustand" Text="Kronenzustand" Margin="0,20,0,0" FontSize="20" Foreground="Gray"/>
+                    <TextBox x:Name="textbox_kronenzustand_sonstiges" TextWrapping="Wrap" Width="260" Height="auto" HorizontalAlignment="Left" Visibility="Visible" MaxLength="140"/>
+                    
+                    <TextBlock x:Name="header_stammzustand" Text="Stammzustand" Margin="0,20,0,0" FontSize="20" Foreground="Gray"/>
+                    <TextBox x:Name="textbox_stammzustand_sonstiges" TextWrapping="Wrap" Width="260" Height="auto" HorizontalAlignment="Left" Visibility="Visible" MaxLength="140"/>
+                    
+                    <TextBlock x:Name="header_wurzelzustand" Text="Wurzelzustand" Margin="0,20,0,0" FontSize="20" Foreground="Gray"/>
+                    <TextBox x:Name="textbox_wurzelzustand_sonstiges" TextWrapping="Wrap" Width="260" Height="auto" HorizontalAlignment="Left" Visibility="Visible" MaxLength="140"/>
+                    
+                    <Button x:Name="togglebutton_verkehrssicherheit" Content="Verkehrssicher:" Click="togglebutton_verkehrssicherheit_Click"/>
+
+                    <TextBlock x:Name="header_maßnahmen" Text="Maßnahmen" Margin="0,20,0,0" FontSize="30" Tapped="header_maßnahmen_Tapped" />
+                    <StackPanel x:Name="stackpanel_maßnahmen" Visibility="Collapsed">
+                        <CheckBox x:Name="checkbox_maßnahmen_1" Content="Fällung" />
+                        <CheckBox x:Name="checkbox_maßnahmen_2" Content="Totholz schneiden" />
+                        <CheckBox x:Name="checkbox_maßnahmen_3" Content="Krone einkürzen 5%" />
+                        <CheckBox x:Name="checkbox_maßnahmen_4" Content="Krone einkürzen 10%" />
+                        <CheckBox x:Name="checkbox_maßnahmen_5" Content="Krone einkürzen 20%" />
+                        <CheckBox x:Name="checkbox_maßnahmen_6" Content="Krone einkürzen 25%" />
+                        <CheckBox x:Name="checkbox_maßnahmen_7" Content="Kronenpflege" />
+                        <CheckBox x:Name="checkbox_maßnahmen_8" Content="Kronenauslichtung" />
+                        <CheckBox x:Name="checkbox_maßnahmen_9" Content="Lichtraumprofil schneiden" />
+                        <CheckBox x:Name="checkbox_maßnahmen_sonstiges" Content="Sonstiges" Checked="checkbox_maßnahmen_sonstiges_Checked" Unchecked="checkbox_maßnahmen_sonstiges_Unchecked" />
+                        <TextBox x:Name="textbox_maßnahmen_sonstiges" TextWrapping="Wrap" Width="260" Height="auto" HorizontalAlignment="Left" Visibility="Collapsed" MaxLength="140"/>
+
+                        <ComboBox x:Name="combo_ausführen_bis" Header="Ausführen bis" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+
+        </PivotItem>
+    </Pivot>
+</Page>

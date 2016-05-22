@@ -1,0 +1,117 @@
+﻿<Page
+    x:Class="Baumkontrollen.AufgenommeneBäumePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Baumkontrollen"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal">
+            <AppBarButton x:Name="button_bearbeiten" Icon="Edit" Label="Bearbeiten" Click="button_bearbeiten_Click" />
+            <AppBarButton x:Name="button_löschen" Icon="Delete" Label="Löschen" Click="button_löschen_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+    <Grid>
+        <Pivot Title="Aufgenommene Bäume">
+            <PivotItem Header="Liste" ScrollViewer.HorizontalScrollMode="Enabled">
+                <ScrollViewer HorizontalScrollBarVisibility="Visible" HorizontalScrollMode="Enabled">
+                <ListView x:Name="listView_bäume" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.IsHorizontalRailEnabled="True" ScrollViewer.HorizontalScrollBarVisibility="Visible" SelectionMode="Single" IsItemClickEnabled="False">
+                    <ListView.Header>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Baum" Width="815" FontSize="24" TextAlignment="Left"/>
+                                <TextBlock Text="Kontrolle" Width="340" FontSize="24" TextAlignment="Left"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="header_baumNr" Text="BaumNr." FontSize="20" Width="85" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_plakettenNr" Text="PlakettenNr." FontSize="20" Width="110" TextAlignment="Left" />
+                                <TextBlock x:Name="header_straße" Text="Straße" FontSize="20" Width="200" TextAlignment="Left" />
+                                <TextBlock x:Name="header_baumart_deutsch" Text="Baumart dt." FontSize="20" Width="210" TextAlignment="Left" />
+                                <TextBlock x:Name="header_baumart_botanisch" Text="Baumart bt." FontSize="20" Width="210" TextAlignment="Left" />
+
+                                <TextBlock x:Name="header_kontrolldatum" Text="Kontrolldatum" FontSize="20" Width="135" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_kontrollintervall" Text="Kontrollintervall" FontSize="20" Width="180" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_entwicklungsphase" Text="Entwicklungsphase" FontSize="20" Width="180" TextAlignment="Left"/>
+                                <!--<TextBlock x:Name="header_vitalitätsstufe" Text="Vitalitätsstufe" FontSize="20" Width="180" TextAlignment="Left"/>-->
+                                <TextBlock x:Name="header_schädigungsgrad" Text="Schädigungsgrad" FontSize="20" Width="220" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_baumhöhe_bereich" Text="Baumhöhenbereich" FontSize="20" Width="180" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_baumhöhe" Text="Baumhöhe" FontSize="20" Width="180" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_kronendurchmesser" Text="Kronendurchmesser" FontSize="20" Width="180" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_stammdurchmesser" Text="Stammdurchmesser" FontSize="20" Width="180" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_stammanzahl" Text="Stammanzahl" FontSize="20" Width="180" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_mängel" Text="Mängel" FontSize="20" Width="250" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_verkehrssicher" Text="Verkehrssicher" FontSize="20" Width="250" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_maßnahmen" Text="Maßnahmen" FontSize="20" Width="250" TextAlignment="Left"/>
+                                <TextBlock x:Name="header_ausführen_bis" Text="Ausführen Bis" FontSize="20" Width="250" TextAlignment="Left"/>
+                            </StackPanel>
+                        </StackPanel>
+                     </ListView.Header>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Grid>
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup x:Name="CommonStates">
+                                                        <VisualState x:Name="Normal"/>
+                                                    </VisualStateGroup>
+                                                    <VisualStateGroup x:Name="SelectionStates">
+                                                        <VisualState x:Name="Unselected">
+                                                            <Storyboard>
+                                                                <ColorAnimation Duration="0" Storyboard.TargetName="myback" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Transparent"/>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="SelectedUnfocused">
+                                                            <Storyboard>
+                                                                <ColorAnimation Duration="0" Storyboard.TargetName="myback" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Gray"/>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                                <Border x:Name="myback" Background="Transparent">
+                                                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                                </Border>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                                <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="text_baumNr" Text="{Binding baumNr}" Width="{Binding ElementName=header_baumNr, Path=Width}" FontSize="25" TextAlignment="Left" />
+                                        <TextBlock Text="{Binding plakettenNr}" Width="{Binding ElementName=header_plakettenNr, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding straße}" Width="{Binding ElementName=header_straße, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding baumart_deutsch}" Width="{Binding ElementName=header_baumart_deutsch, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding baumart_botanisch}" Width="{Binding ElementName=header_baumart_botanisch, Path=Width}" FontSize="25" TextAlignment="Left"/>
+
+                                        <TextBlock Text="{Binding kontrolldatum}" Width="{Binding ElementName=header_kontrolldatum, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding kontrollintervall}" Width="{Binding ElementName=header_kontrollintervall, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding entwicklungsphase}" Width="{Binding ElementName=header_entwicklungsphase, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <!--<TextBlock Text="{Binding vitalitätsstufe}" Width="{Binding ElementName=header_vitalitätsstufe, Path=Width}" FontSize="25" TextAlignment="Left"/>-->
+                                        <TextBlock Text="{Binding schädigungsgrad}" Width="{Binding ElementName=header_schädigungsgrad, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding baumhöhe_bereich}" Width="{Binding ElementName=header_baumhöhe_bereich, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding baumhöhe}" Width="{Binding ElementName=header_baumhöhe, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding kronendurchmesser}" Width="{Binding ElementName=header_kronendurchmesser, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding stammdurchmesser}" Width="{Binding ElementName=header_stammdurchmesser, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding stammanzahl}" Width="{Binding ElementName=header_stammanzahl, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                        <TextBlock Text="{Binding mängel}" Width="{Binding ElementName=header_mängel, Path=Width}" FontSize="25" TextAlignment="Left" TextWrapping="WrapWholeWords"/>
+                                        <TextBlock Text="{Binding verkehrssicher}" Width="{Binding ElementName=header_verkehrssicher, Path=Width}" FontSize="25" TextAlignment="Left" />
+                                        <TextBlock Text="{Binding maßnahmen}" Width="{Binding ElementName=header_maßnahmen, Path=Width}" FontSize="25" TextAlignment="Left" TextWrapping="WrapWholeWords"/>
+                                        <TextBlock Text="{Binding ausführenBis}" Width="{Binding ElementName=header_ausführen_bis, Path=Width}" FontSize="25" TextAlignment="Left"/>
+                                    </StackPanel>
+                            </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>

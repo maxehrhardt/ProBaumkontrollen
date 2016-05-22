@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>678c763f-7b45-4da7-b14b-420ac1d55a92</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Baumkontrollen</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Benutzer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DatenbankVerwalter.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Baum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\AusführenBis.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Baumart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Baumhöhenbereiche.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\DBVersion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Entwicklungsphase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Kronenzustand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Maßnahmen.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Schädigungsgrad.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Stammfußzustand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Stammzustand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Straße.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Vitalitätsstufe.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Hilfstabellen\Wurzelzustand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Kontrolle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ListView_bäume_item.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projekt.cs" />
+  </ItemGroup>
+</Project>

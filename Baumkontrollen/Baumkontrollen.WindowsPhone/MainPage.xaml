@@ -1,0 +1,114 @@
+﻿<Page
+    x:Class="Baumkontrollen.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Baumkontrollen"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
+    <Grid>
+        <TextBlock x:Name="txtStartmenü" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Startmenü" VerticalAlignment="Top" Height="53" Width="209" FontSize="40" Margin="10,10,0,0"/>
+
+        <StackPanel Margin="0,100,0,0">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" MinHeight="40"/>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Aktuelles Projekt: " FontSize="18" Foreground="Gray"/>
+                <TextBlock x:Name="textblock_aktuelles_projekt"  Grid.Column="1" Grid.Row="0"  TextAlignment="Left" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Aktueller Benutzer: " FontSize="18" Foreground="Gray"/>
+                <TextBlock x:Name="textblock_aktueller_benutzer" Grid.Column="1" Grid.Row="1"  TextAlignment="Left" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+            </Grid>
+
+            <Button x:Name="button_projektWählen"   HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="189" Height="auto" Click="button_projektWählen_Click">
+                <TextBlock Text="Projekt/Benutzer wählen" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+            <Button x:Name="button_neuaufnahme" Content="Neuaufnahme" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Top" Click="button_neuaufnahme_Click" Width="189">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout x:Name="flyout_kein_aktiver">
+                        <StackPanel Orientation="Horizontal">
+                            <AppBarButton>
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="!"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <TextBlock x:Name="text_in_projektflyout_projekt_doppelt" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Width="308">
+                                Es wurde noch kein Benutzer und/oder Projekt gewählt. Drücken sie auf: "Projekt/ Benutzer wählen" um diese auszuwählen.
+                            </TextBlock>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </Button>
+            
+            <Button x:Name="button_aufgenommene_Bäume_anzeigen"  HorizontalAlignment="Center" Width="189" Click="button_aufgenommene_Bäume_anzeigen_Click">
+                <TextBlock Text="Aufgenommene Bäume anzeigen" TextWrapping="Wrap" TextAlignment="Center"/>
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout>
+                        <StackPanel Orientation="Horizontal">
+                            <AppBarButton>
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="!"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Width="308">
+                                Es wurde noch kein Benutzer und/oder Projekt gewählt. Drücken sie auf: "Projekt/ Benutzer wählen" um diese auszuwählen.
+                            </TextBlock>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+
+            </Button>
+            
+            <Button x:Name="button_kontrolle_durchführen"  HorizontalAlignment="Center" Width="189" Click="button_kontrolle_durchführen_Click"  >
+                <TextBlock Text="Kontrolle durchführen" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"  />
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout>
+                        <StackPanel Orientation="Horizontal">
+                            <AppBarButton>
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="!"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" Width="308">
+                                Es wurde noch kein Benutzer und/oder Projekt gewählt. Drücken sie auf: "Projekt/ Benutzer wählen" um diese auszuwählen.
+                            </TextBlock>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </Button>
+            
+            <Button x:Name="button_auf_sd_kopieren"    HorizontalAlignment="Center" Width="189" Height="auto" Click="button_auf_sd_kopieren_Click" >
+                <TextBlock Text="Daten auf SD kopieren" TextWrapping="Wrap" TextAlignment="Center"/>
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout x:Name="flyout_auf_sd_kopiert">
+
+                        <StackPanel Orientation="Horizontal">
+                            <AppBarButton Icon="Accept"/>
+
+                            <TextBlock  TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15"  Width="250" >
+                                Die Datenbanken wurden erfolgreich auf die SD-Karte kopiert.
+                            </TextBlock>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </Button>
+
+            <Button x:Name="button_db_importieren" HorizontalAlignment="Center" Width="189" Height="auto" Click="button_db_importieren_Click" Visibility="Collapsed">
+                <TextBlock Text="DB importieren" TextWrapping="Wrap" TextAlignment="Center" />
+            </Button>
+
+            <Button x:Name="button_errorLog" HorizontalAlignment="Center" Width="189" Height="auto"  Visibility="Visible" Click="button_errorLog_Click">
+                <TextBlock Text="Error Log" TextWrapping="Wrap" TextAlignment="Center" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>
