@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.BottomAppBar>
-        <CommandBar ClosedDisplayMode="Minimal">
+        <CommandBar  IsOpen="True">
             <AppBarButton x:Name="button_speichern" Icon="Save" Label="Speichern" Click="button_speichern_Click" >
                 <FlyoutBase.AttachedFlyout>
                     <Flyout x:Name="flyout_baum_speichern_falsche_eingabe">
@@ -245,7 +245,7 @@
 
                     <TextBlock x:Name="header_maßnahmen" Text="Maßnahmen" Margin="0,20,0,0" FontSize="30" Tapped="header_maßnahmen_Tapped" />
                     <StackPanel x:Name="stackpanel_maßnahmen" Visibility="Collapsed">
-                        <CheckBox x:Name="checkbox_maßnahmen_1" Content="Fällung" />
+                        <!--<CheckBox x:Name="checkbox_maßnahmen_1" Content="Fällung" />
                         <CheckBox x:Name="checkbox_maßnahmen_2" Content="Totholz schneiden" />
                         <CheckBox x:Name="checkbox_maßnahmen_3" Content="Krone einkürzen 5%" />
                         <CheckBox x:Name="checkbox_maßnahmen_4" Content="Krone einkürzen 10%" />
@@ -254,8 +254,8 @@
                         <CheckBox x:Name="checkbox_maßnahmen_7" Content="Kronenpflege" />
                         <CheckBox x:Name="checkbox_maßnahmen_8" Content="Kronenauslichtung" />
                         <CheckBox x:Name="checkbox_maßnahmen_9" Content="Lichtraumprofil schneiden" />
-                        <CheckBox x:Name="checkbox_maßnahmen_sonstiges" Content="Sonstiges" Checked="checkbox_maßnahmen_sonstiges_Checked" Unchecked="checkbox_maßnahmen_sonstiges_Unchecked" />
-                        <TextBox x:Name="textbox_maßnahmen_sonstiges" TextWrapping="Wrap" Width="260" Height="auto" HorizontalAlignment="Left" Visibility="Collapsed" MaxLength="140"/>
+                        <CheckBox x:Name="checkbox_maßnahmen_sonstiges" Content="Sonstiges" Checked="checkbox_maßnahmen_sonstiges_Checked" Unchecked="checkbox_maßnahmen_sonstiges_Unchecked" />-->
+                        <TextBox x:Name="textbox_maßnahmen_sonstiges" TextWrapping="Wrap" Width="260" Height="auto" HorizontalAlignment="Left" Visibility="Visible" MaxLength="140"/>
 
                         <ComboBox x:Name="combo_ausführen_bis" Header="Ausführen bis" HorizontalAlignment="Left"/>
                     </StackPanel>

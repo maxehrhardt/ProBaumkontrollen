@@ -101,9 +101,9 @@ namespace Baumkontrollen
             DBVersion dbVersion = new DBVersion
             {
                 id = 1,
-                version = "1.0"
+                version = "1.1"
             };
-
+            connection_to_arbeitsDB.Insert(dbVersion);
 
             connection_to_arbeitsDB.CreateTable<Baum>();
             connection_to_arbeitsDB.CreateTable<Kontrolle>();
@@ -234,50 +234,50 @@ namespace Baumkontrollen
             ///Tabelle Maßnahmen erstellen
             ////////
             connection_to_arbeitsDB.CreateTable<Maßnahmen>();
-            Maßnahmen maßnahmen = new Maßnahmen
-            {
-                id=1,
-                name="Fällung"
-            };
-            connection_to_arbeitsDB.Insert(maßnahmen);
+            //Maßnahmen maßnahmen = new Maßnahmen
+            //{
+            //    id=1,
+            //    name="Fällung"
+            //};
+            //connection_to_arbeitsDB.Insert(maßnahmen);
 
-            maßnahmen.id = 2;
-            maßnahmen.name = "Totholz schneiden";
-            connection_to_arbeitsDB.Insert(maßnahmen);
+            //maßnahmen.id = 2;
+            //maßnahmen.name = "Totholz schneiden";
+            //connection_to_arbeitsDB.Insert(maßnahmen);
 
-            maßnahmen.id = 3;
-            maßnahmen.name = "Krone einkürzen 5%";
-            connection_to_arbeitsDB.Insert(maßnahmen);
+            //maßnahmen.id = 3;
+            //maßnahmen.name = "Krone einkürzen 5%";
+            //connection_to_arbeitsDB.Insert(maßnahmen);
 
-            maßnahmen.id = 4;
-            maßnahmen.name = "Krone einkürzen 10%";
-            connection_to_arbeitsDB.Insert(maßnahmen);
+            //maßnahmen.id = 4;
+            //maßnahmen.name = "Krone einkürzen 10%";
+            //connection_to_arbeitsDB.Insert(maßnahmen);
 
-            maßnahmen.id = 5;
-            maßnahmen.name = "Krone einkürzen 20%";
-            connection_to_arbeitsDB.Insert(maßnahmen);
+            //maßnahmen.id = 5;
+            //maßnahmen.name = "Krone einkürzen 20%";
+            //connection_to_arbeitsDB.Insert(maßnahmen);
 
-            maßnahmen.id = 6;
-            maßnahmen.name = "Krone einkürzen 25%";
-            connection_to_arbeitsDB.Insert(maßnahmen);
+            //maßnahmen.id = 6;
+            //maßnahmen.name = "Krone einkürzen 25%";
+            //connection_to_arbeitsDB.Insert(maßnahmen);
 
-            maßnahmen.id = 7;
-            maßnahmen.name = "Kronenpflege";
-            connection_to_arbeitsDB.Insert(maßnahmen);
+            //maßnahmen.id = 7;
+            //maßnahmen.name = "Kronenpflege";
+            //connection_to_arbeitsDB.Insert(maßnahmen);
 
-            maßnahmen.id = 8;
-            maßnahmen.name = "Kronenauslichtung";
-            connection_to_arbeitsDB.Insert(maßnahmen);
+            //maßnahmen.id = 8;
+            //maßnahmen.name = "Kronenauslichtung";
+            //connection_to_arbeitsDB.Insert(maßnahmen);
 
-            maßnahmen.id = 9;
-            maßnahmen.name = "Lichtraumprofil schneiden";
-            connection_to_arbeitsDB.Insert(maßnahmen);
+            //maßnahmen.id = 9;
+            //maßnahmen.name = "Lichtraumprofil schneiden";
+            //connection_to_arbeitsDB.Insert(maßnahmen);
 
 
 
-            maßnahmen.id = 10;
-            maßnahmen.name = "Sonstiges";
-            connection_to_arbeitsDB.Insert(maßnahmen);
+            //maßnahmen.id = 10;
+            //maßnahmen.name = "Sonstiges";
+            //connection_to_arbeitsDB.Insert(maßnahmen);
 
             ////////
             ///Tabelle Schädigungsgrad erstellen

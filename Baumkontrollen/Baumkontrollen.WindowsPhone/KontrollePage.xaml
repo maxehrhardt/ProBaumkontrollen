@@ -326,7 +326,7 @@
 
 
                             <TextBlock Text="Entwicklungsphase" Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="Gray" FontSize="20"/>
-                            <ComboBox x:Name="combo_entwicklungsphase_letzte_kontrolle" Grid.Column="1" Grid.Row="1"  Width="260" HorizontalAlignment="Left" IsEnabled="False"/>
+                            <ComboBox x:Name="combo_entwicklungsphase_letzte_kontrolle" Grid.Column="1" Grid.Row="1"  Width="260" HorizontalAlignment="Left" IsEnabled="False" PlaceholderText=""/>
                             <ComboBox x:Name="combo_entwicklungsphase" Grid.Column="1" Grid.Row="2" Width="260" HorizontalAlignment="Left"/>
                             <AppBarButton x:Name="button_entwicklungsphase_übernehmen" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Center" Icon="Up" RenderTransformOrigin="0.5,0.5" Click="button_entwicklungsphase_übernehmen_Click"  >
                                 <AppBarButton.RenderTransform>
@@ -335,7 +335,7 @@
                             </AppBarButton>
 
                             <TextBlock Text="Schädigungsgrad" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="Gray" FontSize="20"/>
-                            <ComboBox x:Name="combo_schädigungsgrad_letzte_kontrolle" Grid.Column="1" Grid.Row="4"  Width="260" HorizontalAlignment="Left" IsEnabled="False"/>
+                            <ComboBox x:Name="combo_schädigungsgrad_letzte_kontrolle" Grid.Column="1" Grid.Row="4"  Width="260" HorizontalAlignment="Left" IsEnabled="False" PlaceholderText=""/>
                             <ComboBox x:Name="combo_schädigungsgrad" Grid.Column="1" Grid.Row="5"  Width="260" HorizontalAlignment="Left"/>
                             <AppBarButton x:Name="button_schädigungsgrad_übernehmen" Grid.Column="2" Grid.Row="4" Grid.RowSpan="2" VerticalAlignment="Center" Icon="Up" RenderTransformOrigin="0.5,0.5" Click="button_schädigungsgrad_übernehmen_Click"  >
                                 <AppBarButton.RenderTransform>
@@ -347,8 +347,8 @@
 
                         <TextBlock x:Name="header_kronenzustand" Text="Kronenzustand" Margin="0,20,0,0" FontSize="20" Foreground="Gray" Tapped="header_kronenzustand_Tapped" />
                         <StackPanel x:Name="stackpanel_kronenzustand" Orientation="Vertical">
-                            <TextBlock Text="letzte"/>
-                            <ListView x:Name="listview_kronenzustand_letzte_kontrolle" BorderBrush="Gray" BorderThickness="1" SelectionMode="None" IsEnabled="False">
+                           
+                            <ListView x:Name="listview_kronenzustand_letzte_kontrolle" BorderBrush="Gray" BorderThickness="1" SelectionMode="None" IsEnabled="False" Header="letzte">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock FontSize="20" Text="{Binding}" TextWrapping="WrapWholeWords" />
@@ -363,8 +363,8 @@
                                 </AppBarButton.Projection>
                             </AppBarButton>
 
-                            <TextBlock Text="aktuell"/>
-                            <ListView x:Name="listview_kronenzustand" BorderBrush="Gray" BorderThickness="1" SelectionMode="Single" SelectionChanged="listview_kronenzustand_SelectionChanged" >
+                            
+                            <ListView x:Name="listview_kronenzustand" BorderBrush="Gray" BorderThickness="1" SelectionMode="Single" SelectionChanged="listview_kronenzustand_SelectionChanged" Header="aktuell">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock FontSize="20" Text="{Binding}" TextWrapping="WrapWholeWords" />
@@ -416,8 +416,7 @@
 
                         <TextBlock x:Name="header_stammzustand" Text="Stammzustand" Margin="0,20,0,0" FontSize="20" Foreground="Gray" Tapped="header_stammzustand_Tapped" />
                         <StackPanel x:Name="stackpanel_stammzustand" Orientation="Vertical">
-                            <TextBlock Text="letzte"/>
-                            <ListView x:Name="listview_stammzustand_letzte_kontrolle" BorderBrush="Gray" BorderThickness="1" SelectionMode="None" IsEnabled="False">
+                            <ListView x:Name="listview_stammzustand_letzte_kontrolle" BorderBrush="Gray" BorderThickness="1" SelectionMode="None" IsEnabled="False" Header="letzte">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock FontSize="20" Text="{Binding}" TextWrapping="WrapWholeWords" />
@@ -431,9 +430,8 @@
                                     <PlaneProjection RotationZ="180"/>
                                 </AppBarButton.Projection>
                             </AppBarButton>
-
-                            <TextBlock Text="aktuell"/>
-                            <ListView x:Name="listview_stammzustand" BorderBrush="Gray" BorderThickness="1" SelectionMode="Single" SelectionChanged="listview_stammzustand_SelectionChanged" >
+                         
+                            <ListView x:Name="listview_stammzustand" BorderBrush="Gray" BorderThickness="1" SelectionMode="Single" SelectionChanged="listview_stammzustand_SelectionChanged" Header="aktuell">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock FontSize="20" Text="{Binding}" TextWrapping="WrapWholeWords" />
@@ -485,8 +483,8 @@
 
                         <TextBlock x:Name="header_wurzelzustand" Text="Wurzelzustand" Margin="0,20,0,0" FontSize="20" Foreground="Gray" Tapped="header_wurzelzustand_Tapped" />
                         <StackPanel x:Name="stackpanel_wurzelzustand" Orientation="Vertical">
-                            <TextBlock Text="letzte"/>
-                            <ListView x:Name="listview_wurzelzustand_letzte_kontrolle" BorderBrush="Gray" BorderThickness="1" SelectionMode="None" IsEnabled="False">
+                           
+                            <ListView x:Name="listview_wurzelzustand_letzte_kontrolle" BorderBrush="Gray" BorderThickness="1" SelectionMode="None" IsEnabled="False" Header="letzte">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock FontSize="20" Text="{Binding}" TextWrapping="WrapWholeWords" />
@@ -501,8 +499,8 @@
                                 </AppBarButton.Projection>
                             </AppBarButton>
 
-                            <TextBlock Text="aktuell"/>
-                            <ListView x:Name="listview_wurzelzustand" BorderBrush="Gray" BorderThickness="1" SelectionMode="Single" SelectionChanged="listview_wurzelzustand_SelectionChanged" >
+                            
+                            <ListView x:Name="listview_wurzelzustand" BorderBrush="Gray" BorderThickness="1" SelectionMode="Single" SelectionChanged="listview_wurzelzustand_SelectionChanged" Header="aktuell">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock FontSize="20" Text="{Binding}" TextWrapping="WrapWholeWords" />
@@ -587,6 +585,8 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="40" MaxWidth="40"/>
@@ -623,29 +623,75 @@
                                 <CheckBox x:Name="checkbox_maßnahmen_9_letzte_kontrolle" Grid.Column="0" Grid.Row="9" IsEnabled="False"/>
                                 <CheckBox x:Name="checkbox_maßnahmen_9" Content="Lichtraumprofil schneiden" Grid.Column="1" Grid.Row="9"/>
 
-                                <CheckBox x:Name="checkbox_maßnahmen_sonstiges_letzte_kontrolle"  Checked="checkbox_maßnahmen_sonstiges_Checked" Unchecked="checkbox_maßnahmen_sonstiges_Unchecked" Grid.Column="0" Grid.Row="10" IsEnabled="False"/>
-                                <CheckBox x:Name="checkbox_maßnahmen_sonstiges" Content="Sonstiges" Checked="checkbox_maßnahmen_sonstiges_Checked" Unchecked="checkbox_maßnahmen_sonstiges_Unchecked" Grid.Column="1" Grid.Row="10"/>
 
-                                <Grid x:Name="grid_maßnahmen_sonstiges" Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="2" Visibility="Collapsed">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="40" MaxWidth="40"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="letzte " Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="aktuell " Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" />
-                                    <TextBox x:Name="textbox_maßnahmen_sonstiges_letzte_kontrolle" TextWrapping="Wrap" Width="260" Height="auto" HorizontalAlignment="Left" MaxLength="140" Grid.Column="1" Grid.Row="0" IsEnabled="False"/>
-                                    <TextBox x:Name="textbox_maßnahmen_sonstiges" TextWrapping="Wrap" Width="260" Height="auto" HorizontalAlignment="Left"  MaxLength="140" Grid.Column="1" Grid.Row="1"/>
-                                    <AppBarButton x:Name="button_maßnahmen_sonstiges_übernehmen" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" Icon="Up" RenderTransformOrigin="0.5,0.5" Click="button_maßnahmen_sonstiges_übernehmen_Click"  >
-                                        <AppBarButton.RenderTransform>
-                                            <CompositeTransform Rotation="180"/>
-                                        </AppBarButton.RenderTransform>
+                                <TextBlock x:Name="header_maßnahmen_sonstiges" Text="Sonstiges" Margin="0,20,0,0" FontSize="15" Foreground="White" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="10"/>
+                                <StackPanel x:Name="stackpanel_maßnahmen_sonstiges" Orientation="Vertical" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="11">                          
+                                    <ListView x:Name="listview_maßnahmen_sonstiges_letzte_kontrolle" BorderBrush="Gray" BorderThickness="1" SelectionMode="None" IsEnabled="False" Visibility="Visible"  Header="letzte">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock FontSize="20" Text="{Binding}" TextWrapping="WrapWholeWords" />
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+
+
+                                    <AppBarButton x:Name="button_maßnahmen_sonstiges_übernehmen" VerticalAlignment="Bottom" HorizontalAlignment="Right" Icon="Up" RenderTransformOrigin="0.5,0.5" Click="button_maßnahmen_sonstiges_übernehmen_Click" Visibility="Collapsed">
+                                        <AppBarButton.Projection>
+                                            <PlaneProjection RotationZ="180"/>
+                                        </AppBarButton.Projection>
                                     </AppBarButton>
-                                </Grid>
+
+                                    
+                                    <ListView x:Name="listview_maßnahmen_sonstiges" BorderBrush="Gray" BorderThickness="1" SelectionMode="Single" SelectionChanged="listview_maßnahmen_sonstiges_SelectionChanged" Header="aktuell" >
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock FontSize="20" Text="{Binding}" TextWrapping="WrapWholeWords" />
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ListViewItem">
+                                                            <Grid>
+                                                                <VisualStateManager.VisualStateGroups>
+                                                                    <VisualStateGroup x:Name="CommonStates">
+                                                                        <VisualState x:Name="Normal"/>
+                                                                    </VisualStateGroup>
+                                                                    <VisualStateGroup x:Name="SelectionStates">
+                                                                        <VisualState x:Name="Unselected">
+                                                                            <Storyboard>
+                                                                                <ColorAnimation Duration="0" Storyboard.TargetName="myback" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Transparent"/>
+                                                                            </Storyboard>
+                                                                        </VisualState>
+                                                                        <VisualState x:Name="SelectedUnfocused">
+                                                                            <Storyboard>
+                                                                                <ColorAnimation Duration="0" Storyboard.TargetName="myback" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Gray"/>
+                                                                            </Storyboard>
+                                                                        </VisualState>
+                                                                    </VisualStateGroup>
+                                                                </VisualStateManager.VisualStateGroups>
+                                                                <Border x:Name="myback" Background="Transparent">
+                                                                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                                                </Border>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                    </ListView>
+                                    <Button x:Name="button_maßnahmen_sonstiges_entfernen" Content="Element entfernen"  HorizontalAlignment="Right" Visibility="Collapsed" Click="button_maßnahmen_sonstiges_entfernen_Click" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <AutoSuggestBox x:Name="autotext_maßnahmen_sonstiges" Width="260" GotFocus="autotext_maßnahmen_sonstiges_GotFocus" TextChanged="autotext_maßnahmen_sonstiges_TextChanged" />
+                                        <AppBarButton x:Name="button_maßnahmen_sonstiges_hinzufügen" Icon="Add" VerticalAlignment="Bottom" Height="60" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" Click="button_maßnahmen_sonstiges_hinzufügen_Click" >
+                                            <AppBarButton.RenderTransform>
+                                                <CompositeTransform TranslateX="-10"/>
+                                            </AppBarButton.RenderTransform>
+                                        </AppBarButton>
+                                    </StackPanel>
+                                </StackPanel>
+
 
                                 <TextBlock Text="Ausführen bis" Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="Gray" FontSize="20"/>
                                 <Grid Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="2">
@@ -660,7 +706,7 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="letzte " Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
                                     <TextBlock Text="aktuell " Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" />
-                                    <ComboBox x:Name="combo_ausführen_bis_letzte_kontrolle" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" Width="260" IsEnabled="False"/>
+                                    <ComboBox x:Name="combo_ausführen_bis_letzte_kontrolle" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0" Width="260" IsEnabled="False" PlaceholderText=""/>
                                     <ComboBox x:Name="combo_ausführen_bis"  HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Width="260"/>
                                     <AppBarButton x:Name="button_ausführen_bis_übernehmen" Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" Icon="Up" RenderTransformOrigin="0.5,0.5" Click="button_ausführen_bis_übernehmen_Click"  >
                                         <AppBarButton.RenderTransform>

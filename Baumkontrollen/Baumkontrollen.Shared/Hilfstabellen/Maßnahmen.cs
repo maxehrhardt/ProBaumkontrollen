@@ -7,7 +7,7 @@ namespace Baumkontrollen.Hilfstabellen
     [Table("tabMassnahmen")]
     class Maßnahmen
     {
-        [PrimaryKey]
+        [PrimaryKey, AutoIncrement]
         public int id { get; set; }
         public string name { get; set; }
     }

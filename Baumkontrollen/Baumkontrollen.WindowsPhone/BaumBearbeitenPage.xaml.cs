@@ -239,18 +239,6 @@ namespace Baumkontrollen
                 textbox_stammanzahl.Text = Convert.ToString(bearbeitete_kontrolle.stammanzahl);
             }
             
-
-            //List<Vitalitätsstufe> list_vitalitätsstufe = connection_to_arbeitsDB.Table<Vitalitätsstufe>().ToList();
-            //foreach (var vitalitätsstufe in list_vitalitätsstufe)
-            //{
-            //    combo_vitalitätsstufe.Items.Add(vitalitätsstufe.name);
-            //}
-            //if (bearbeitete_kontrolle.vitalitätsstufeID!=0)
-            //{
-            //    List<Vitalitätsstufe> ausgewählte_vitalitätsstufe = connection_to_arbeitsDB.Query<Vitalitätsstufe>("SELECT * FROM tabVitalitaetsstufe WHERE id=?", bearbeitete_kontrolle.vitalitätsstufeID);
-            //    combo_vitalitätsstufe.SelectedItem = ausgewählte_vitalitätsstufe.ElementAt(0).name;
-            //}
-
             List<Schädigungsgrad> list_schädigungsgrad = connection_to_arbeitsDB.Table<Schädigungsgrad>().ToList();
             foreach (var schädigungsgrad in list_schädigungsgrad)
             {
@@ -461,51 +449,51 @@ namespace Baumkontrollen
                 togglebutton_verkehrssicherheit.Background = new SolidColorBrush(Colors.Red);
             }
 
-            if (bearbeitete_kontrolle.maßnahmenIDs != null)
+            //if (bearbeitete_kontrolle.maßnahmenIDs != null)
+            //{
+            //    string[] maßnahmenIDs = bearbeitete_kontrolle.maßnahmenIDs.Split(new Char[] { ' ' });
+            //    foreach (var id in maßnahmenIDs)
+            //    {
+            //        if (id.Trim() != "")
+            //        {
+            //            switch (Convert.ToInt32(id))
+            //            {
+            //                case 1:
+            //                    checkbox_maßnahmen_1.IsChecked = true;
+            //                    break;
+            //                case 2:
+            //                    checkbox_maßnahmen_2.IsChecked = true;
+            //                    break;
+            //                case 3:
+            //                    checkbox_maßnahmen_3.IsChecked = true;
+            //                    break;
+            //                case 4:
+            //                    checkbox_maßnahmen_4.IsChecked = true;
+            //                    break;
+            //                case 5:
+            //                    checkbox_maßnahmen_5.IsChecked = true;
+            //                    break;
+            //                case 6:
+            //                    checkbox_maßnahmen_6.IsChecked = true;
+            //                    break;
+            //                case 7:
+            //                    checkbox_maßnahmen_7.IsChecked = true;
+            //                    break;
+            //                case 8:
+            //                    checkbox_maßnahmen_8.IsChecked = true;
+            //                    break;
+            //                case 9:
+            //                    checkbox_maßnahmen_9.IsChecked = true;
+            //                    break;
+            //                default:
+            //                    break;
+            //            }
+            //        }
+            //    }
+            //}
+            if (bearbeitete_kontrolle.maßnahmenSonstiges.Length!=0)
             {
-                string[] maßnahmenIDs = bearbeitete_kontrolle.maßnahmenIDs.Split(new Char[] { ' ' });
-                foreach (var id in maßnahmenIDs)
-                {
-                    if (id.Trim() != "")
-                    {
-                        switch (Convert.ToInt32(id))
-                        {
-                            case 1:
-                                checkbox_maßnahmen_1.IsChecked = true;
-                                break;
-                            case 2:
-                                checkbox_maßnahmen_2.IsChecked = true;
-                                break;
-                            case 3:
-                                checkbox_maßnahmen_3.IsChecked = true;
-                                break;
-                            case 4:
-                                checkbox_maßnahmen_4.IsChecked = true;
-                                break;
-                            case 5:
-                                checkbox_maßnahmen_5.IsChecked = true;
-                                break;
-                            case 6:
-                                checkbox_maßnahmen_6.IsChecked = true;
-                                break;
-                            case 7:
-                                checkbox_maßnahmen_7.IsChecked = true;
-                                break;
-                            case 8:
-                                checkbox_maßnahmen_8.IsChecked = true;
-                                break;
-                            case 9:
-                                checkbox_maßnahmen_9.IsChecked = true;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
-            if (bearbeitete_kontrolle.maßnahmenSonstiges != null)
-            {
-                checkbox_maßnahmen_sonstiges.IsChecked = true;
+                //checkbox_maßnahmen_sonstiges.IsChecked = true;
                 textbox_maßnahmen_sonstiges.Text = bearbeitete_kontrolle.maßnahmenSonstiges;
             }
 
@@ -1120,48 +1108,51 @@ namespace Baumkontrollen
                 //////
                 //Maßnahmen
                 /////
-                if (checkbox_maßnahmen_1.IsChecked == true)
-                {
-                    kontrolle.maßnahmenIDs = "1 ";
-                }
-                if (checkbox_maßnahmen_2.IsChecked == true)
-                {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "2 ";
-                }
-                if (checkbox_maßnahmen_3.IsChecked == true)
-                {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "3 ";
-                }
-                if (checkbox_maßnahmen_4.IsChecked == true)
-                {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "4 ";
-                }
-                if (checkbox_maßnahmen_5.IsChecked == true)
-                {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "5 ";
-                }
-                if (checkbox_maßnahmen_6.IsChecked == true)
-                {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "6 ";
-                }
-                if (checkbox_maßnahmen_7.IsChecked == true)
-                {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "7 ";
-                }
-                if (checkbox_maßnahmen_8.IsChecked == true)
-                {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "8 ";
-                }
-                if (checkbox_maßnahmen_9.IsChecked == true)
-                {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "9 ";
-                }
+                //if (checkbox_maßnahmen_1.IsChecked == true)
+                //{
+                //    kontrolle.maßnahmenIDs = "1 ";
+                //}
+                //if (checkbox_maßnahmen_2.IsChecked == true)
+                //{
+                //    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "2 ";
+                //}
+                //if (checkbox_maßnahmen_3.IsChecked == true)
+                //{
+                //    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "3 ";
+                //}
+                //if (checkbox_maßnahmen_4.IsChecked == true)
+                //{
+                //    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "4 ";
+                //}
+                //if (checkbox_maßnahmen_5.IsChecked == true)
+                //{
+                //    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "5 ";
+                //}
+                //if (checkbox_maßnahmen_6.IsChecked == true)
+                //{
+                //    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "6 ";
+                //}
+                //if (checkbox_maßnahmen_7.IsChecked == true)
+                //{
+                //    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "7 ";
+                //}
+                //if (checkbox_maßnahmen_8.IsChecked == true)
+                //{
+                //    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "8 ";
+                //}
+                //if (checkbox_maßnahmen_9.IsChecked == true)
+                //{
+                //    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "9 ";
+                //}
 
-                if (checkbox_maßnahmen_sonstiges.IsChecked == true)
+                //if (checkbox_maßnahmen_sonstiges.IsChecked == true)
+                //{
+                //    kontrolle.maßnahmenSonstiges = textbox_maßnahmen_sonstiges.Text;
+                //}
+                if (textbox_maßnahmen_sonstiges.Text.Length!=0)
                 {
                     kontrolle.maßnahmenSonstiges = textbox_maßnahmen_sonstiges.Text;
                 }
-
 
                 //////
                 //Ausführen Bis

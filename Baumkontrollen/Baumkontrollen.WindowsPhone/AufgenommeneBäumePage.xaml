@@ -10,7 +10,7 @@
 
 
     <Page.BottomAppBar>
-        <CommandBar ClosedDisplayMode="Minimal">
+        <CommandBar  IsOpen="True">
             <AppBarButton x:Name="button_bearbeiten" Icon="Edit" Label="Bearbeiten" Click="button_bearbeiten_Click" />
             <AppBarButton x:Name="button_löschen" Icon="Delete" Label="Löschen" Click="button_löschen_Click" />
         </CommandBar>
@@ -36,9 +36,8 @@
 
                                 <TextBlock x:Name="header_kontrolldatum" Text="Kontrolldatum" FontSize="20" Width="135" TextAlignment="Left"/>
                                 <TextBlock x:Name="header_kontrollintervall" Text="Kontrollintervall" FontSize="20" Width="180" TextAlignment="Left"/>
-                                <TextBlock x:Name="header_entwicklungsphase" Text="Entwicklungsphase" FontSize="20" Width="180" TextAlignment="Left"/>
-                                <!--<TextBlock x:Name="header_vitalitätsstufe" Text="Vitalitätsstufe" FontSize="20" Width="180" TextAlignment="Left"/>-->
-                                <TextBlock x:Name="header_schädigungsgrad" Text="Schädigungsgrad" FontSize="20" Width="220" TextAlignment="Left"/>
+                                    <TextBlock x:Name="header_entwicklungsphase" Text="Entwicklungsphase" FontSize="20" Width="180" TextAlignment="Left"/>
+                                    <TextBlock x:Name="header_schädigungsgrad" Text="Schädigungsgrad" FontSize="20" Width="220" TextAlignment="Left"/>
                                 <TextBlock x:Name="header_baumhöhe_bereich" Text="Baumhöhenbereich" FontSize="20" Width="180" TextAlignment="Left"/>
                                 <TextBlock x:Name="header_baumhöhe" Text="Baumhöhe" FontSize="20" Width="180" TextAlignment="Left"/>
                                 <TextBlock x:Name="header_kronendurchmesser" Text="Kronendurchmesser" FontSize="20" Width="180" TextAlignment="Left"/>

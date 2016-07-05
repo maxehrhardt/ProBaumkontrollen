@@ -147,6 +147,7 @@ namespace Baumkontrollen
 
                 hilfs_connection.CreateTable<DBVersion>();
                 List<DBVersion> list_dbVersion = hilfs_connection.Table<DBVersion>().ToList();
+               
 
                 if (list_dbVersion.Count==0)
                 {
@@ -278,16 +279,56 @@ namespace Baumkontrollen
                         kontrolle.wurzelzustandSonstiges = string_wurzelzustand; 
 
                         hilfs_connection.Update(kontrolle);
+                        hilfs_connection.Close();
                     }
                 }
-                else
+
+                if (list_dbVersion.ElementAt(0).version == "1.0")
                 {
-                    //Hier werden die Aktualisierungen aufgelistet, die in der jeweiligen Version durchzuführen sind
-                    if (list_dbVersion.ElementAt(0).version=="1.0")
+                    // In DB Version 1.1 werden die vorgegebenen Maßnahmen in eine Tabelle MaßnahmenSontiges überschrieben
+                    //1. Aktualisieren der Datenbankversion
+                    DBVersion dbVersion = new DBVersion();
+                    dbVersion.id = 1;
+                    dbVersion.version = "1.1";
+                    hilfs_connection.Update(dbVersion);
+
+                    //2. Überschreiben der Daten in der Kontrolle für Kronenzustand
+                    List<Kontrolle> list_kontrollen = hilfs_connection.Table<Kontrolle>().ToList();
+
+                    foreach (var kontrolle in list_kontrollen)
                     {
-                        
+                        string string_maßnahmen = "";
+                        if (kontrolle.maßnahmenIDs != null)
+                        {
+                            string[] maßnahmenIDs = kontrolle.maßnahmenIDs.Split(new Char[] { ' ' });
+                            foreach (var id in maßnahmenIDs)
+                            {
+                                if (id.Trim() != "")
+                                {
+                                    List<Maßnahmen> list_maßnahmen = hilfs_connection.Query<Maßnahmen>("SELECT * FROM tabMassnahmen WHERE id=?", Convert.ToInt32(id)).ToList();
+                                    if (list_maßnahmen.Count != 0)
+                                    {
+                                        string_maßnahmen = string_maßnahmen + list_maßnahmen.ElementAt(0).name + "; ";
+                                    }
+                                }
+                            }
+                            string_maßnahmen = string_maßnahmen.TrimEnd(';', ' ');
+
+                            if (kontrolle.maßnahmenSonstiges != null)
+                            {
+                                if (kontrolle.maßnahmenSonstiges.Length > 0)
+                                {
+                                    string_maßnahmen = string_maßnahmen + "; " + kontrolle.maßnahmenSonstiges;
+                                }
+                            }
+
+                        }
+                        kontrolle.maßnahmenSonstiges = string_maßnahmen;
+                        hilfs_connection.Update(kontrolle);
                     }
                 }
+
+
 
                 hilfs_connection.Close();
             }

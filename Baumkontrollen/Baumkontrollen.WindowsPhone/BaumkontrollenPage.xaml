@@ -413,7 +413,7 @@
                         <Button x:Name="togglebutton_verkehrssicherheit" Content="Verkehrssicher:" Click="togglebutton_verkehrssicherheit_Click"/>
 
                         <TextBlock x:Name="header_maßnahmen" Text="Maßnahmen" Margin="0,20,0,0" FontSize="30" Tapped="header_maßnahmen_Tapped" />
-                        <StackPanel x:Name="stackpanel_maßnahmen" Visibility="Collapsed" Margin="30,0,0,0">
+                        <StackPanel x:Name="stackpanel_maßnahmen" Visibility="Visible" Margin="30,0,0,0">
                             <CheckBox x:Name="checkbox_maßnahmen_1" Content="Fällung" />
                             <CheckBox x:Name="checkbox_maßnahmen_2" Content="Totholz schneiden" />
                             <CheckBox x:Name="checkbox_maßnahmen_3" Content="Krone einkürzen 5%" />
@@ -423,10 +423,62 @@
                             <CheckBox x:Name="checkbox_maßnahmen_7" Content="Kronenpflege" />
                             <CheckBox x:Name="checkbox_maßnahmen_8" Content="Kronenauslichtung" />
                             <CheckBox x:Name="checkbox_maßnahmen_9" Content="Lichtraumprofil schneiden" />
-                            <CheckBox x:Name="checkbox_maßnahmen_sonstiges" Content="Sonstiges" Checked="checkbox_maßnahmen_sonstiges_Checked" Unchecked="checkbox_maßnahmen_sonstiges_Unchecked" />
-                            <TextBox x:Name="textbox_maßnahmen_sonstiges" TextWrapping="Wrap" Width="260" Height="auto" HorizontalAlignment="Left" Visibility="Collapsed" MaxLength="140"/>
+                            <!--<CheckBox x:Name="checkbox_maßnahmen_sonstiges" Content="Sonstiges" Checked="checkbox_maßnahmen_sonstiges_Checked" Unchecked="checkbox_maßnahmen_sonstiges_Unchecked" />
+                            <TextBox x:Name="textbox_maßnahmen_sonstiges" TextWrapping="Wrap" Width="260" Height="auto" HorizontalAlignment="Left" Visibility="Collapsed" MaxLength="140"/>-->
 
-                            <ComboBox x:Name="combo_ausführen_bis" Header="Ausführen bis" HorizontalAlignment="Left"/>
+                            <TextBlock x:Name="header_maßnahmen_sonstiges" Text="Sonstiges" Margin="0,20,0,0" FontSize="20" Foreground="White"/>
+                            <StackPanel x:Name="stackpanel_maßnahmen_sonstiges" Visibility="Visible">
+                                <ListView x:Name="listview_maßnahmen_sonstiges" BorderBrush="Gray" BorderThickness="1" Margin="0,10,0,0"  FontSize="20" SelectionChanged="listview_maßnahmen_sonstiges_SelectionChanged"  >
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock FontSize="20" Text="{Binding}" TextWrapping="WrapWholeWords"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListViewItem">
+                                                        <Grid>
+                                                            <VisualStateManager.VisualStateGroups>
+                                                                <VisualStateGroup x:Name="CommonStates">
+                                                                    <VisualState x:Name="Normal"/>
+                                                                </VisualStateGroup>
+                                                                <VisualStateGroup x:Name="SelectionStates">
+                                                                    <VisualState x:Name="Unselected">
+                                                                        <Storyboard>
+                                                                            <ColorAnimation Duration="0" Storyboard.TargetName="myback" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Transparent"/>
+                                                                        </Storyboard>
+                                                                    </VisualState>
+                                                                    <VisualState x:Name="SelectedUnfocused">
+                                                                        <Storyboard>
+                                                                            <ColorAnimation Duration="0" Storyboard.TargetName="myback" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Gray"/>
+                                                                        </Storyboard>
+                                                                    </VisualState>
+                                                                </VisualStateGroup>
+                                                            </VisualStateManager.VisualStateGroups>
+                                                            <Border x:Name="myback" Background="Transparent">
+                                                                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                                            </Border>
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                </ListView>
+                                <Button x:Name="button_maßnahmen_sonstiges_entfernen" Content="Element entfernen" HorizontalAlignment="Right" Visibility="Collapsed" Click="button_maßnahmen_sonstiges_entfernen_Click"  />
+                                <StackPanel Orientation="Horizontal">
+                                    <AutoSuggestBox x:Name="autotext_maßnahmen_sonstiges" Width="260" TextChanged="autotext_maßnahmen_sonstiges_TextChanged" GotFocus="autotext_maßnahmen_sonstiges_GotFocus" />
+                                    <AppBarButton x:Name="button_maßnahmen_sonstiges_hinzufügen" Icon="Add" VerticalAlignment="Bottom" Height="60" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" Click="button_maßnahmen_sonstiges_hinzufügen_Click"  >
+                                        <AppBarButton.RenderTransform>
+                                            <CompositeTransform TranslateX="-10"/>
+                                        </AppBarButton.RenderTransform>
+                                    </AppBarButton>
+                                </StackPanel>
+                            </StackPanel>                   
+
+                        <ComboBox x:Name="combo_ausführen_bis" Header="Ausführen bis" HorizontalAlignment="Left"/>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>

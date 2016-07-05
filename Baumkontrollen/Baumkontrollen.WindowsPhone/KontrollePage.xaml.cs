@@ -347,7 +347,7 @@ namespace Baumkontrollen
             if (letzte_kontrolle.entwicklungsphaseID!=0)
             {
                 List<Entwicklungsphase> letzte_entwicklungsphase = connection_to_arbeitsDB.Query<Entwicklungsphase>("SELECT * FROM tabEntwicklungsphase WHERE id=?", letzte_kontrolle.entwicklungsphaseID);
-                combo_entwicklungsphase_letzte_kontrolle.SelectedItem = letzte_entwicklungsphase.ElementAt(0).name;
+                combo_entwicklungsphase_letzte_kontrolle.SelectedItem = letzte_entwicklungsphase.ElementAt(0).name;             
             }
 
             if (letzte_kontrolle.schädigungsgradID!=0)
@@ -399,55 +399,62 @@ namespace Baumkontrollen
                 togglebutton_verkehrssicherheit_letzte_kontrolle.Background = new SolidColorBrush(Colors.Red);
             }
 
-            if (letzte_kontrolle.maßnahmenIDs != null)
+            if (letzte_kontrolle.maßnahmenSonstiges.Length!=0)
             {
-                string[] maßnahmenIDs = letzte_kontrolle.maßnahmenIDs.Split(new Char[] { ' ' });
-                foreach (var id in maßnahmenIDs)
+                string[] maßnahmen = letzte_kontrolle.maßnahmenSonstiges.Split(new Char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+                listview_maßnahmen_sonstiges.Items.Clear();
+
+                foreach (var maßnahme in maßnahmen)
                 {
-                    if (id.Trim() != "")
-                    {
-                        switch (Convert.ToInt32(id))
-                        {
-                            case 1:
-                                checkbox_maßnahmen_1_letzte_kontrolle.IsChecked = true;
-                                break;
-                            case 2:
-                                checkbox_maßnahmen_2_letzte_kontrolle.IsChecked = true;
-                                break;
-                            case 3:
-                                checkbox_maßnahmen_3_letzte_kontrolle.IsChecked = true;
-                                break;
-                            case 4:
-                                checkbox_maßnahmen_4_letzte_kontrolle.IsChecked = true;
-                                break;
-                            case 5:
-                                checkbox_maßnahmen_5_letzte_kontrolle.IsChecked = true;
-                                break;
-                            case 6:
-                                checkbox_maßnahmen_6_letzte_kontrolle.IsChecked = true;
-                                break;
-                            case 7:
-                                checkbox_maßnahmen_7_letzte_kontrolle.IsChecked = true;
-                                break;
-                            case 8:
-                                checkbox_maßnahmen_8_letzte_kontrolle.IsChecked = true;
-                                break;
-                            case 9:
-                                checkbox_maßnahmen_9_letzte_kontrolle.IsChecked = true;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                    listview_maßnahmen_sonstiges_letzte_kontrolle.Items.Add(maßnahme);
                 }
-                stackpanel_maßnahmen.Visibility = Visibility.Visible;
             }
-            if (letzte_kontrolle.maßnahmenSonstiges != null)
-            {
-                checkbox_maßnahmen_sonstiges_letzte_kontrolle.IsChecked = true;
-                textbox_maßnahmen_sonstiges_letzte_kontrolle.Text = letzte_kontrolle.maßnahmenSonstiges;
-                grid_maßnahmen_sonstiges.Visibility = Visibility.Visible;
-            }
+
+            //if (letzte_kontrolle.maßnahmenIDs != null)
+            //{
+            //    string[] maßnahmenIDs = letzte_kontrolle.maßnahmenIDs.Split(new Char[] { ' ' });
+            //    foreach (var id in maßnahmenIDs)
+            //    {
+            //        if (id.Trim() != "")
+            //        {
+            //            switch (Convert.ToInt32(id))
+            //            {
+            //                case 1:
+            //                    checkbox_maßnahmen_1_letzte_kontrolle.IsChecked = true;
+            //                    break;
+            //                case 2:
+            //                    checkbox_maßnahmen_2_letzte_kontrolle.IsChecked = true;
+            //                    break;
+            //                case 3:
+            //                    checkbox_maßnahmen_3_letzte_kontrolle.IsChecked = true;
+            //                    break;
+            //                case 4:
+            //                    checkbox_maßnahmen_4_letzte_kontrolle.IsChecked = true;
+            //                    break;
+            //                case 5:
+            //                    checkbox_maßnahmen_5_letzte_kontrolle.IsChecked = true;
+            //                    break;
+            //                case 6:
+            //                    checkbox_maßnahmen_6_letzte_kontrolle.IsChecked = true;
+            //                    break;
+            //                case 7:
+            //                    checkbox_maßnahmen_7_letzte_kontrolle.IsChecked = true;
+            //                    break;
+            //                case 8:
+            //                    checkbox_maßnahmen_8_letzte_kontrolle.IsChecked = true;
+            //                    break;
+            //                case 9:
+            //                    checkbox_maßnahmen_9_letzte_kontrolle.IsChecked = true;
+            //                    break;
+            //                default:
+            //                    break;
+            //            }
+            //        }
+            //    }
+            //    stackpanel_maßnahmen.Visibility = Visibility.Visible;
+            //}
+
 
             if (letzte_kontrolle.ausführenBisIDs != 0)
             {
@@ -584,16 +591,6 @@ namespace Baumkontrollen
             }
         }
 
-        private void checkbox_maßnahmen_sonstiges_Checked(object sender, RoutedEventArgs e)
-        {
-            textbox_maßnahmen_sonstiges.Visibility = Visibility.Visible;
-        }
-
-        private void checkbox_maßnahmen_sonstiges_Unchecked(object sender, RoutedEventArgs e)
-        {
-            textbox_maßnahmen_sonstiges.Visibility = Visibility.Collapsed;
-        }
-
         //Verhalten des Verkehrssicherheit Buttons
 
         private void togglebutton_verkehrssicherheit_Click(object sender, RoutedEventArgs e)
@@ -703,12 +700,6 @@ namespace Baumkontrollen
         private void button_schädigungsgrad_übernehmen_Click(object sender, RoutedEventArgs e)
         {
             combo_schädigungsgrad.SelectedItem = combo_schädigungsgrad_letzte_kontrolle.SelectedItem;
-        }
-
-        private void button_maßnahmen_sonstiges_übernehmen_Click(object sender, RoutedEventArgs e)
-        {
-            textbox_maßnahmen_sonstiges.Text = textbox_maßnahmen_sonstiges_letzte_kontrolle.Text;
-            checkbox_maßnahmen_sonstiges.IsChecked = true;
         }
 
         private void button_ausführen_bis_übernehmen_Click(object sender, RoutedEventArgs e)
@@ -834,6 +825,7 @@ namespace Baumkontrollen
                     {
                         //Es gibt bereits einen Eintrag in der Datenbank für den eingegebenen Kronenzustand, nominaler Fall
                         listview_kronenzustand.Items.Add(autotext_kronenzustand.Text);
+                        autotext_kronenzustand.Text = "";
                     }
                     else
                     {
@@ -851,6 +843,7 @@ namespace Baumkontrollen
                                 Kronenzustand kronenzustand = new Kronenzustand();
                                 kronenzustand.name = autotext_kronenzustand.Text.Trim();
                                 connection_to_arbeitsDB.Insert(kronenzustand);
+                                autotext_kronenzustand.Text = "";
                                 break;
                             case "Nein":
                                 break;
@@ -859,6 +852,11 @@ namespace Baumkontrollen
                     }
                 }
 
+            }
+            else
+            {
+                MessageDialog message_kein_wert = new MessageDialog("Es wurde kein Kronenzustand eingegeben, der übernommen werden kann");
+                await message_kein_wert.ShowAsync();
             }
         }
 
@@ -923,7 +921,7 @@ namespace Baumkontrollen
 
         private void autotext_stammzustand_GotFocus(object sender, RoutedEventArgs e)
         {
-            List<Kronenzustand> list_stammzustände = connection_to_arbeitsDB.Table<Kronenzustand>().ToList();
+            List<Stammzustand> list_stammzustände = connection_to_arbeitsDB.Table<Stammzustand>().ToList();
             List<string> list_stammzustände_string = new List<string>();
 
             foreach (var stammzustand in list_stammzustände)
@@ -977,6 +975,7 @@ namespace Baumkontrollen
                     {
                         //Es gibt bereits einen Eintrag in der Datenbank für den eingegebenen Stammzustand, nominaler Fall
                         listview_stammzustand.Items.Add(autotext_stammzustand.Text);
+                        autotext_stammzustand.Text = "";
                     }
                     else
                     {
@@ -994,6 +993,7 @@ namespace Baumkontrollen
                                 Stammzustand stammzustand = new Stammzustand();
                                 stammzustand.name = autotext_stammzustand.Text.Trim();
                                 connection_to_arbeitsDB.Insert(stammzustand);
+                                autotext_stammzustand.Text = "";
                                 break;
                             case "Nein":
                                 break;
@@ -1002,6 +1002,11 @@ namespace Baumkontrollen
                     }
                 }
 
+            }
+            else
+            {
+                MessageDialog message_kein_wert = new MessageDialog("Es wurde kein Stammzustand eingegeben, der übernommen werden kann");
+                await message_kein_wert.ShowAsync();
             }
         }
 
@@ -1066,7 +1071,7 @@ namespace Baumkontrollen
 
         private void autotext_wurzelzustand_GotFocus(object sender, RoutedEventArgs e)
         {
-            List<Kronenzustand> list_wurzelzustände = connection_to_arbeitsDB.Table<Kronenzustand>().ToList();
+            List<Wurzelzustand> list_wurzelzustände = connection_to_arbeitsDB.Table<Wurzelzustand>().ToList();
             List<string> list_wurzelzustände_string = new List<string>();
 
             foreach (var wurzelzustand in list_wurzelzustände)
@@ -1120,6 +1125,7 @@ namespace Baumkontrollen
                     {
                         //Es gibt bereits einen Eintrag in der Datenbank für den eingegebenen Wurzelzustand, nominaler Fall
                         listview_wurzelzustand.Items.Add(autotext_wurzelzustand.Text);
+                        autotext_wurzelzustand.Text = "";
                     }
                     else
                     {
@@ -1137,6 +1143,7 @@ namespace Baumkontrollen
                                 Wurzelzustand wurzelzustand = new Wurzelzustand();
                                 wurzelzustand.name = autotext_wurzelzustand.Text.Trim();
                                 connection_to_arbeitsDB.Insert(wurzelzustand);
+                                autotext_wurzelzustand.Text = "";
                                 break;
                             case "Nein":
                                 break;
@@ -1146,9 +1153,161 @@ namespace Baumkontrollen
                 }
 
             }
+            else
+            {
+                MessageDialog message_kein_wert = new MessageDialog("Es wurde kein Wurzelzustand eingegeben, der übernommen werden kann");
+                await message_kein_wert.ShowAsync();
+            }
         }
 
+ //Maßnahmen
+        private void button_maßnahmen_sonstiges_übernehmen_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var maßnahmen in listview_maßnahmen_sonstiges_letzte_kontrolle.Items.ToList())
+            {
+                if (listview_maßnahmen_sonstiges.Items.Contains(maßnahmen) == false)
+                {
+                    listview_maßnahmen_sonstiges.Items.Add(maßnahmen);
+                }
+            }
+        }
 
+        private void listview_maßnahmen_sonstiges_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listview_maßnahmen_sonstiges.SelectedItem != null)
+            {
+                button_maßnahmen_sonstiges_entfernen.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                button_maßnahmen_sonstiges_entfernen.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private async void  button_maßnahmen_sonstiges_entfernen_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog message_maßnahmen_sonstiges_entfernen = new MessageDialog("Woraus soll das Element entfernt werden?");
+            message_maßnahmen_sonstiges_entfernen.Commands.Add(new UICommand("Aus Datenbank"));
+            message_maßnahmen_sonstiges_entfernen.Commands.Add(new UICommand("Nur aus Liste"));
+            var command = await message_maßnahmen_sonstiges_entfernen.ShowAsync();
+
+            switch (command.Label)
+            {
+                case "Aus Datenbank":
+
+                    Maßnahmen maßnahme = new Maßnahmen();
+                    List<Maßnahmen> list_maßnahmen = connection_to_arbeitsDB.Query<Maßnahmen>("SELECT * FROM tabMassnahmen WHERE name=?", listview_maßnahmen_sonstiges.SelectedItem);
+                    if (list_maßnahmen.Count != 0)
+                    {
+                        maßnahme = list_maßnahmen.ElementAt(0);
+                        connection_to_arbeitsDB.Delete(maßnahme);
+                    }
+                    else
+                    {
+                        //Error log
+                    }
+
+                    listview_maßnahmen_sonstiges.Items.Remove(listview_maßnahmen_sonstiges.SelectedItem);
+                    break;
+                case "Nur aus Liste":
+                    listview_maßnahmen_sonstiges.Items.Remove(listview_maßnahmen_sonstiges.SelectedItem);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void autotext_maßnahmen_sonstiges_GotFocus(object sender, RoutedEventArgs e)
+        {
+            List<Maßnahmen> list_maßnahmen = connection_to_arbeitsDB.Table<Maßnahmen>().ToList();
+            List<string> list_maßnahmen_string = new List<string>();
+
+            foreach (var maßnahme in list_maßnahmen)
+            {
+                list_maßnahmen_string.Add(maßnahme.name);
+            }
+            if (list_maßnahmen_string.Count != 0)
+            {
+                list_maßnahmen_string.Sort();
+                autotext_maßnahmen_sonstiges.ItemsSource = list_maßnahmen_string;
+            }
+            autotext_maßnahmen_sonstiges.IsSuggestionListOpen = true;
+        }
+
+        private void autotext_maßnahmen_sonstiges_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                List<Maßnahmen> list_maßnahmen = connection_to_arbeitsDB.Table<Maßnahmen>().ToList();
+                List<string> gefilterte_maßnahmen = new List<string>();
+
+                string benutzereingabe = autotext_maßnahmen_sonstiges.Text;
+
+                foreach (var maßnahme in list_maßnahmen)
+                {
+                    if (maßnahme.name.StartsWith(benutzereingabe) == true)
+                    {
+                        gefilterte_maßnahmen.Add(maßnahme.name);
+                    }
+                }
+
+                gefilterte_maßnahmen.Sort();
+                autotext_maßnahmen_sonstiges.ItemsSource = gefilterte_maßnahmen;
+            }
+        }
+        
+        private async void button_maßnahmen_sonstiges_hinzufügen_Click(object sender, RoutedEventArgs e)
+        {
+            if (autotext_maßnahmen_sonstiges.Text.Length != 0)
+            {
+                if (listview_maßnahmen_sonstiges.Items.Contains(autotext_maßnahmen_sonstiges.Text))
+                {
+                    MessageDialog message_maßnahmen_vorhanden = new MessageDialog("Der eingegebene Wert ist bereits in der Liste vorhanden.");
+                    await message_maßnahmen_vorhanden.ShowAsync();
+                }
+                else
+                {
+                    List<Maßnahmen> maßnahmen_exists = connection_to_arbeitsDB.Query<Maßnahmen>("SELECT * FROM tabMassnahmen WHERE name=?", autotext_maßnahmen_sonstiges.Text);
+
+                    if (maßnahmen_exists.Count != 0)
+                    {
+                        //Es gibt bereits einen Eintrag in der Datenbank für den eingegebenen Maßnahmen, nominaler Fall
+                        listview_maßnahmen_sonstiges.Items.Add(autotext_maßnahmen_sonstiges.Text);
+                        autotext_maßnahmen_sonstiges.Text = "";
+                    }
+                    else
+                    {
+                        MessageDialog message_maßnahmen_hinzufügen = new MessageDialog("Die eingegebene Maßnahme ist noch nicht in der Datenbank gespeichert. Soll dieser Wert jetzt gespeichert und der Liste hinzugefügt werden?");
+
+                        message_maßnahmen_hinzufügen.Commands.Add(new UICommand("Ja"));
+                        message_maßnahmen_hinzufügen.Commands.Add(new UICommand("Nein"));
+
+                        var command = await message_maßnahmen_hinzufügen.ShowAsync();
+
+                        switch (command.Label)
+                        {
+                            case "Ja":
+                                listview_maßnahmen_sonstiges.Items.Add(autotext_maßnahmen_sonstiges.Text.Trim());
+                                Maßnahmen maßnahme = new Maßnahmen();
+                                maßnahme.name = autotext_maßnahmen_sonstiges.Text.Trim();
+                                connection_to_arbeitsDB.Insert(maßnahme);
+                                autotext_maßnahmen_sonstiges.Text = "";
+                                break;
+                            case "Nein":
+                                break;
+                        }
+
+                    }
+                }
+
+            }
+            else
+            {
+                MessageDialog message_kein_wert = new MessageDialog("Es wurde keine Maßnahme eingegeben, die übernommen werden kann");
+                await message_kein_wert.ShowAsync();
+            }
+        }
+        
         /*
          * Verhalten der Button in der Page.Bottombar
          */
@@ -1275,48 +1434,55 @@ namespace Baumkontrollen
                 //////
                 //Maßnahmen
                 /////
+                string maßnahmen_sonstiges = "";
+
                 if (checkbox_maßnahmen_1.IsChecked == true)
                 {
-                    kontrolle.maßnahmenIDs = "1 ";
+                    maßnahmen_sonstiges = maßnahmen_sonstiges + "; " + checkbox_maßnahmen_1.Content;
                 }
                 if (checkbox_maßnahmen_2.IsChecked == true)
                 {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "2 ";
+                    maßnahmen_sonstiges = maßnahmen_sonstiges + "; " + checkbox_maßnahmen_2.Content;
                 }
                 if (checkbox_maßnahmen_3.IsChecked == true)
                 {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "3 ";
+                    maßnahmen_sonstiges = maßnahmen_sonstiges + "; " + checkbox_maßnahmen_3.Content;
                 }
                 if (checkbox_maßnahmen_4.IsChecked == true)
                 {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "4 ";
+                    maßnahmen_sonstiges = maßnahmen_sonstiges + "; " + checkbox_maßnahmen_4.Content;
                 }
                 if (checkbox_maßnahmen_5.IsChecked == true)
                 {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "5 ";
+                    maßnahmen_sonstiges = maßnahmen_sonstiges + "; " + checkbox_maßnahmen_5.Content;
                 }
                 if (checkbox_maßnahmen_6.IsChecked == true)
                 {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "6 ";
+                    maßnahmen_sonstiges = maßnahmen_sonstiges + "; " + checkbox_maßnahmen_6.Content;
                 }
                 if (checkbox_maßnahmen_7.IsChecked == true)
                 {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "7 ";
+                    maßnahmen_sonstiges = maßnahmen_sonstiges + "; " + checkbox_maßnahmen_7.Content;
                 }
                 if (checkbox_maßnahmen_8.IsChecked == true)
                 {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "8 ";
+                    maßnahmen_sonstiges = maßnahmen_sonstiges + "; " + checkbox_maßnahmen_8.Content;
                 }
                 if (checkbox_maßnahmen_9.IsChecked == true)
                 {
-                    kontrolle.maßnahmenIDs = kontrolle.maßnahmenIDs + "9 ";
+                    maßnahmen_sonstiges = maßnahmen_sonstiges + "; " + checkbox_maßnahmen_9.Content;
                 }
 
-                if (checkbox_maßnahmen_sonstiges.IsChecked == true)
+                if (listview_maßnahmen_sonstiges.Items.Count > 0)
                 {
-                    kontrolle.maßnahmenSonstiges = textbox_maßnahmen_sonstiges.Text;
-                }
 
+                    foreach (var eigenschaft in listview_maßnahmen_sonstiges.Items.ToList())
+                    {
+                        maßnahmen_sonstiges = maßnahmen_sonstiges + "; " + eigenschaft.ToString();
+                    }
+                }
+                maßnahmen_sonstiges = maßnahmen_sonstiges.TrimStart(';', ' ');
+                kontrolle.maßnahmenSonstiges = maßnahmen_sonstiges;
 
                 //////
                 //Ausführen Bis
@@ -1394,7 +1560,7 @@ namespace Baumkontrollen
             textbox_stammdurchmesser.Text = "";
             textbox_stammdurchmesser_letzte_kontrolle.Text = "";
 
-            textbox_stammanzahl.Text = "";
+            textbox_stammanzahl.Text = Convert.ToString(1);
             textbox_stammanzahl_letzte_kontrolle.Text = "";
 
             combo_entwicklungsphase.SelectedItem = null;
@@ -1431,8 +1597,7 @@ namespace Baumkontrollen
             checkbox_maßnahmen_7.IsChecked = false;
             checkbox_maßnahmen_8.IsChecked = false;
             checkbox_maßnahmen_9.IsChecked = false;
-            checkbox_maßnahmen_sonstiges.IsChecked = false;
-            textbox_maßnahmen_sonstiges.Text = "";
+
 
             checkbox_maßnahmen_1_letzte_kontrolle.IsChecked = false;
             checkbox_maßnahmen_2_letzte_kontrolle.IsChecked = false;
@@ -1443,8 +1608,9 @@ namespace Baumkontrollen
             checkbox_maßnahmen_7_letzte_kontrolle.IsChecked = false;
             checkbox_maßnahmen_8_letzte_kontrolle.IsChecked = false;
             checkbox_maßnahmen_9_letzte_kontrolle.IsChecked = false;
-            checkbox_maßnahmen_sonstiges_letzte_kontrolle.IsChecked = false;
-            textbox_maßnahmen_sonstiges_letzte_kontrolle.Text = "";
+
+            listview_maßnahmen_sonstiges.Items.Clear();
+            listview_maßnahmen_sonstiges_letzte_kontrolle.Items.Clear();
 
             combo_ausführen_bis.SelectedItem = null;
             combo_ausführen_bis_letzte_kontrolle.SelectedItem = null; 
@@ -1638,6 +1804,20 @@ namespace Baumkontrollen
 
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
