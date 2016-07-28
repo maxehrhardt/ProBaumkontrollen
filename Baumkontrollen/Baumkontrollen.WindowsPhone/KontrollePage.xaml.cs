@@ -92,8 +92,10 @@ namespace Baumkontrollen
                 /*
                  * Füllen der Listview mit den aus den Suchkriterien ermittelten Bäumen
                  */
+
                 connection_to_arbeitsDB = dbVerwalter.connectToArbeitsDB(list_aktives_projekt.ElementAt(0).Name);
 
+                
                 /*
                  * Anzeigen des richtigen pivotelements zu Beginn
                  */
@@ -104,79 +106,154 @@ namespace Baumkontrollen
                 List<Straße> list_straßen = connection_to_arbeitsDB.Table<Straße>().ToList();               
                 List<String> list_straßen_string = new List<string>();
 
-                foreach (var straße in list_straßen)
+                
+                if (list_straßen.Count != 0)
                 {
-                    list_straßen_string.Add(straße.name);
+                    foreach (var straße in list_straßen)
+                    {
+                        list_straßen_string.Add(straße.name);
+                    }
                 }
+                //throw new NullReferenceException("Blabla");
+
                 list_straßen_string.Sort();
 
                 autosuggestbox_straße.ItemsSource = list_straßen_string;
                 autosuggestbox_straße.UpdateLayout();
-
-                List<Baumhöhenbereiche> list_baumhöhenbereiche = connection_to_arbeitsDB.Table<Baumhöhenbereiche>().ToList();
-                foreach (var baumhöhenbereich in list_baumhöhenbereiche)
+                
+                
+         
+                try
                 {
-                    combo_baumhöhenbereich.Items.Add(baumhöhenbereich.name);
-                    combo_baumhöhenbereich_letzte_kontrolle.Items.Add(baumhöhenbereich.name);
+                    List<Baumhöhenbereiche> list_baumhöhenbereiche = connection_to_arbeitsDB.Table<Baumhöhenbereiche>().ToList();
+                    foreach (var baumhöhenbereich in list_baumhöhenbereiche)
+                    {
+                        combo_baumhöhenbereich.Items.Add(baumhöhenbereich.name);
+                        combo_baumhöhenbereich_letzte_kontrolle.Items.Add(baumhöhenbereich.name);
+                    }
+
+                }
+                catch (Exception)
+                {
+                    System.NullReferenceException ex = new System.NullReferenceException("list_baumhöhenbereiche could not be loaded");
+                    throw ex;
                 }
 
-                List<Entwicklungsphase> list_entwicklungsphasen = connection_to_arbeitsDB.Table<Entwicklungsphase>().ToList();
-                foreach (var entwicklungsphase in list_entwicklungsphasen)
+                
+                try
                 {
-                    combo_entwicklungsphase.Items.Add(entwicklungsphase.name);
-                    combo_entwicklungsphase_letzte_kontrolle.Items.Add(entwicklungsphase.name);
+                    List<Entwicklungsphase> list_entwicklungsphasen = connection_to_arbeitsDB.Table<Entwicklungsphase>().ToList();
+                    foreach (var entwicklungsphase in list_entwicklungsphasen)
+                    {
+                        combo_entwicklungsphase.Items.Add(entwicklungsphase.name);
+                        combo_entwicklungsphase_letzte_kontrolle.Items.Add(entwicklungsphase.name);
+                    }
+                }
+                catch (Exception)
+                {        
+                    System.NullReferenceException ex = new System.NullReferenceException("list_entwicklungsphase could not be loaded");
+                    throw ex;
                 }
 
-                List<Schädigungsgrad> list_schädigungsgrad = connection_to_arbeitsDB.Table<Schädigungsgrad>().ToList();
-                foreach (var schädigungsgrad in list_schädigungsgrad)
+                
+                try
                 {
-                    combo_schädigungsgrad.Items.Add(schädigungsgrad.name);
-                    combo_schädigungsgrad_letzte_kontrolle.Items.Add(schädigungsgrad.name);
+                    List<Schädigungsgrad> list_schädigungsgrad = connection_to_arbeitsDB.Table<Schädigungsgrad>().ToList();
+                    foreach (var schädigungsgrad in list_schädigungsgrad)
+                    {
+                        combo_schädigungsgrad.Items.Add(schädigungsgrad.name);
+                        combo_schädigungsgrad_letzte_kontrolle.Items.Add(schädigungsgrad.name);
+                    }
+                }
+                catch (Exception)
+                {
+                    System.NullReferenceException ex = new System.NullReferenceException("list_schädigungsgrad could not be loaded");
+                    throw ex;
                 }
 
-                List<Kronenzustand> list_kronenzustände = connection_to_arbeitsDB.Table<Kronenzustand>().ToList();
-                List<string> list_kronenzustände_string = new List<string>();
+                
 
-                foreach (var kronenzustand in list_kronenzustände)
+                try
                 {
-                    list_kronenzustände_string.Add(kronenzustand.name);
+                    List<Kronenzustand> list_kronenzustände = connection_to_arbeitsDB.Table<Kronenzustand>().ToList();
+                    List<string> list_kronenzustände_string = new List<string>();
+                    foreach (var kronenzustand in list_kronenzustände)
+                    {
+                        list_kronenzustände_string.Add(kronenzustand.name);
+                    }
+                    if (list_kronenzustände_string.Count != 0)
+                    {
+                        list_kronenzustände_string.Sort();
+                        autotext_kronenzustand.ItemsSource = list_kronenzustände_string;
+                    }
                 }
-                if (list_kronenzustände_string.Count != 0)
+                catch (Exception)
                 {
-                    list_kronenzustände_string.Sort();
-                    autotext_kronenzustand.ItemsSource = list_kronenzustände_string;
-                }
-
-                List<Stammzustand> list_stammzustände = connection_to_arbeitsDB.Table<Stammzustand>().ToList();
-                List<string> list_stammzustände_string = new List<string>();
-
-                foreach (var stammzustand in list_stammzustände)
-                {
-                    list_stammzustände_string.Add(stammzustand.name);
-                }
-                if (list_stammzustände_string.Count != 0)
-                {
-                    list_stammzustände_string.Sort();
-                    autotext_stammzustand.ItemsSource = list_stammzustände_string;
+                    System.NullReferenceException ex = new System.NullReferenceException("list_kronenzustände could not be loaded");
+                    throw ex;
                 }
 
-                List<Wurzelzustand> list_wurzelzustände = connection_to_arbeitsDB.Table<Wurzelzustand>().ToList();
-                List<string> list_wurzelzustände_string = new List<string>();
 
-                foreach (var wurzelzustand in list_wurzelzustände)
+
+                
+
+                try
                 {
-                    list_wurzelzustände_string.Add(wurzelzustand.name);
+                    List<Stammzustand> list_stammzustände = connection_to_arbeitsDB.Table<Stammzustand>().ToList();
+                    List<string> list_stammzustände_string = new List<string>();
+                    foreach (var stammzustand in list_stammzustände)
+                    {
+                        list_stammzustände_string.Add(stammzustand.name);
+                    }
+                    if (list_stammzustände_string.Count != 0)
+                    {
+                        list_stammzustände_string.Sort();
+                        autotext_stammzustand.ItemsSource = list_stammzustände_string;
+                    }
                 }
-                if (list_wurzelzustände_string.Count != 0)
+                catch (Exception)
                 {
-                    list_wurzelzustände_string.Sort();
-                    autotext_wurzelzustand.ItemsSource = list_wurzelzustände_string;
+                    System.NullReferenceException ex = new System.NullReferenceException("list_stammzustände could not be loaded");
+                    throw ex;
                 }
 
-                List<AusführenBis> list_ausführenBis = connection_to_arbeitsDB.Table<AusführenBis>().ToList();
-                foreach (var ausführenBis in list_ausführenBis)
+
+
+
+                try
                 {
-                    combo_ausführen_bis.Items.Add(ausführenBis.name);
+                    List<Wurzelzustand> list_wurzelzustände = connection_to_arbeitsDB.Table<Wurzelzustand>().ToList();
+                    List<string> list_wurzelzustände_string = new List<string>();
+                    foreach (var wurzelzustand in list_wurzelzustände)
+                    {
+                        list_wurzelzustände_string.Add(wurzelzustand.name);
+                    }
+                    if (list_wurzelzustände_string.Count != 0)
+                    {
+                        list_wurzelzustände_string.Sort();
+                        autotext_wurzelzustand.ItemsSource = list_wurzelzustände_string;
+                    }
+                }
+                catch (Exception)
+                {
+                    System.NullReferenceException ex = new System.NullReferenceException("list_wurzelzustände could not be loaded");
+                    throw ex;
+                }
+
+
+                
+                try
+                {
+                    List<AusführenBis> list_ausführenBis = connection_to_arbeitsDB.Table<AusführenBis>().ToList();
+                    foreach (var ausführenBis in list_ausführenBis)
+                    {
+                        combo_ausführen_bis.Items.Add(ausführenBis.name);
+                    }
+                }
+                catch (Exception)
+                {
+                    System.NullReferenceException ex = new System.NullReferenceException("list_ausführenBis could not be loaded");
+                    throw ex;
                 }
 
             }

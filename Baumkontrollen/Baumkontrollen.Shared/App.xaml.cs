@@ -72,7 +72,8 @@ namespace Baumkontrollen
              else 
              {
 
-                 Task t = writeErrorMessage(string.Format("UnhandledException - Exit - {0}", e.Exception.ToString()));
+                // Task t = writeErrorMessage(string.Format("UnhandledException - Exit - {0}", e.Exception.ToString()));
+                 Task t = writeErrorMessage(string.Format("UnhandledException - Exit - {0}",e.Exception+"\n"+e.Message));                 
                  t.Wait(3000); // Give the application 3 seconds to write to the log file. Should be enough time. 
                                 
                  e.Handled = false; 
