@@ -1843,7 +1843,7 @@ namespace Baumkontrollen
              */
             list_bäume_gefiltert = connection_to_arbeitsDB.Query<Baum>(sqlite_query_command);
 
-            if (list_of_listviewitems_bäume_item_global.Count == 0)
+            if (list_of_listviewitems_bäume_item_global.Count == 0 && list_bäume_gefiltert.Count!=0)
             {
                 foreach (var baum in list_bäume_gefiltert)
                 {
