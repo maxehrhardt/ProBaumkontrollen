@@ -627,7 +627,7 @@ namespace Baumkontrollen
                 
                 if (autotext_baumart_deutsch.Text != "")
                 {
-                    List<Baumart> list_ausgewählte_baumart = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE NameDeutsch=? OR NameBotanisch=?", autotext_baumart_deutsch.Text,autotext_baumart_deutsch.Text);
+                    List<Baumart> list_ausgewählte_baumart = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE NameDeutsch=?", autotext_baumart_deutsch.Text);
                     if (list_ausgewählte_baumart.Count != 0)
                     {
                         Baumart ausgewählte_baumart = list_ausgewählte_baumart.ElementAt(0);
@@ -637,8 +637,26 @@ namespace Baumkontrollen
                     {
                         //Error log
                     }
-                    
+
                 }
+                else
+                {
+                    if (autotext_baumart_botanisch.Text != "")
+                    {
+                        List<Baumart> list_ausgewählte_baumart = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE NameBotanisch=?", autotext_baumart_botanisch.Text);
+                        if (list_ausgewählte_baumart.Count != 0)
+                        {
+                            Baumart ausgewählte_baumart = list_ausgewählte_baumart.ElementAt(0);
+                            baum.baumartId = ausgewählte_baumart.ID;
+                        }
+                        else
+                        {
+                            //Error log
+                        }
+                    }
+                }
+
+
 
                 baum.erstelldatum = textbox_baumerstelldatum.Text;
 

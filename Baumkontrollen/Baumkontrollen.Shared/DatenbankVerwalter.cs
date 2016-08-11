@@ -550,8 +550,8 @@ namespace Baumkontrollen
                 }
                 else
                 {
-                    MessageDialog message = new MessageDialog("Datei mit Endung: " + file.FileType + " wurde versucht zu kopieren.");
-                    await message.ShowAsync();
+                    //MessageDialog message = new MessageDialog("Datei mit Endung: " + file.FileType + " wurde versucht zu kopieren.");
+                    //await message.ShowAsync();
                     //throw new System.ArgumentException("File ending while saving was: "+file.FileType);
                 }
                 

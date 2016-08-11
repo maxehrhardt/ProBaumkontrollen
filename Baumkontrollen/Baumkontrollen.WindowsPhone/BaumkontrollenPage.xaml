@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.BottomAppBar>
-        <CommandBar ClosedDisplayMode="Minimal">
+        <CommandBar  IsOpen="True" >
             <AppBarButton x:Name="button_hinzufügen" Icon="Add" Label="Hinzufügen" Click="button_hinzufügen_Click">
                 <FlyoutBase.AttachedFlyout>
                     <Flyout x:Name="flyout_baum_hinzufügen_falsche_eingabe">

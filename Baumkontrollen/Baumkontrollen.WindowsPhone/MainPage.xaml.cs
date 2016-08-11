@@ -385,7 +385,7 @@ namespace Baumkontrollen
 
         private void button_db_importieren_Click(object sender, RoutedEventArgs e)
         {
-            //dbVerwalter.copy_arbeitsDB_to_internal("Zwickau Kunz");           
+            //dbVerwalter.copy_arbeitsDB_to_internal("Kurpark Bad Lauchstädt");           
         }
 
         private async void button_errorLog_Click(object sender, RoutedEventArgs e)

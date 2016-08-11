@@ -94,10 +94,32 @@ namespace Baumkontrollen
                     listView_bäume_item.baumNr = baum.baumNr;
                     listView_bäume_item.plakettenNr = baum.plakettenNr;
 
-                    listView_bäume_item.straße = connection_to_arbeitsDB.Query<Straße>("SELECT * FROM tabStrassen WHERE id=?", baum.straßeId).ToList().ElementAt(0).name;
+                    try
+                    {
+                        listView_bäume_item.straße = connection_to_arbeitsDB.Query<Straße>("SELECT * FROM tabStrassen WHERE id=?", baum.straßeId).ToList().ElementAt(0).name;
+                    }
+                    catch (System.ArgumentOutOfRangeException)
+                    {
+                        listView_bäume_item.straße = "";                       
+                    }
 
-                    listView_bäume_item.baumart_deutsch = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE id=?", baum.baumartId).ToList().ElementAt(0).NameDeutsch;
-                    listView_bäume_item.baumart_botanisch = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE id=?", baum.baumartId).ToList().ElementAt(0).NameBotanisch;
+                    try
+                    {
+                        listView_bäume_item.baumart_deutsch = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE id=?", baum.baumartId).ToList().ElementAt(0).NameDeutsch;
+                    }
+                    catch (System.ArgumentOutOfRangeException)
+                    {
+                        listView_bäume_item.baumart_deutsch = "";
+                    }
+
+                    try
+                    {
+                        listView_bäume_item.baumart_botanisch = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE id=?", baum.baumartId).ToList().ElementAt(0).NameBotanisch;
+                    }
+                    catch (System.ArgumentOutOfRangeException)
+                    {
+                        listView_bäume_item.baumart_botanisch = "";
+                    }
 
 
                     if (zugehörige_kontrolle!=null)

@@ -1767,7 +1767,7 @@ namespace Baumkontrollen
 
         }
 
-        private void button_baumliste_anzeigen_Click(object sender, RoutedEventArgs e)
+        private void  button_baumliste_anzeigen_Click(object sender, RoutedEventArgs e)
         {
             //Zusammenstellen der Baumliste nach den eingegebenen Eigenschaften
             /*
@@ -1817,8 +1817,18 @@ namespace Baumkontrollen
                 {
                     if (autosuggestbox_straße.Text != "")
                     {
-                        int straßeID = connection_to_arbeitsDB.Query<Straße>("SELECT * FROM tabStrassen WHERE name=?", autosuggestbox_straße.Text).ElementAt(0).id;
-                        sqlite_query_command += "straßeID= " + Convert.ToString(straßeID) + " AND ";
+
+                        try
+                        {
+                            int straßeID = connection_to_arbeitsDB.Query<Straße>("SELECT * FROM tabStrassen WHERE name=?", autosuggestbox_straße.Text).ElementAt(0).id;
+                            sqlite_query_command += "straßeID= " + Convert.ToString(straßeID) + " AND ";
+                        }
+                        catch (ArgumentOutOfRangeException)
+                        {
+                            MessageDialogHelper.Show("Die eingegebene Straße befand sich nicht in der Datenbank.", "Warning");
+
+                        }
+                        
                     }
                 }
 
@@ -1865,12 +1875,38 @@ namespace Baumkontrollen
                     listView_bäume_item.baumNr = baum.baumNr;
                     listView_bäume_item.plakettenNr = baum.plakettenNr;
 
-                    
 
-                    listView_bäume_item.straße = connection_to_arbeitsDB.Query<Straße>("SELECT * FROM tabStrassen WHERE id=?", baum.straßeId).ToList().ElementAt(0).name;
 
-                    listView_bäume_item.baumart_deutsch = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE id=?", baum.baumartId).ToList().ElementAt(0).NameDeutsch;
-                    listView_bäume_item.baumart_botanisch = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE id=?", baum.baumartId).ToList().ElementAt(0).NameBotanisch;
+                    try
+                    {
+                        listView_bäume_item.straße = connection_to_arbeitsDB.Query<Straße>("SELECT * FROM tabStrassen WHERE id=?", baum.straßeId).ToList().ElementAt(0).name;
+
+                    }
+                    catch (System.ArgumentOutOfRangeException)
+                    {
+
+                        listView_bäume_item.straße = "";
+                    }
+
+
+                    try
+                    {
+                        listView_bäume_item.baumart_deutsch = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE id=?", baum.baumartId).ToList().ElementAt(0).NameDeutsch;
+                    }
+                    catch (System.ArgumentOutOfRangeException)
+                    {
+                        listView_bäume_item.baumart_deutsch = "";                    
+                    }
+
+                    try
+                    {
+                        listView_bäume_item.baumart_botanisch = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE id=?", baum.baumartId).ToList().ElementAt(0).NameBotanisch;
+
+                    }
+                    catch (System.ArgumentOutOfRangeException)
+                    {
+                        listView_bäume_item.baumart_botanisch = "";
+                    }
 
                     list_of_listviewitems_bäume_item_global.Add(listView_bäume_item);
                 }
@@ -1878,8 +1914,6 @@ namespace Baumkontrollen
 
             //Wechseln zum Baumlisten Pivotelement
             change_to_baumliste();
-
-
         }
 
 
