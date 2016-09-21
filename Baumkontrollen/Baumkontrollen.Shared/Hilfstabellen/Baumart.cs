@@ -5,7 +5,7 @@ using SQLite;
 namespace Baumkontrollen
 {
     [Table("tabBaumart")]
-    class Baumart
+    public class Baumart
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }

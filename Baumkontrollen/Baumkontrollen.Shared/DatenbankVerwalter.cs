@@ -513,13 +513,13 @@ namespace Baumkontrollen
 
         public async void deleteAllDB()
         {
-            
-            var file_to_delete = await dataFolder.GetFileAsync("Projekte"+dbFileEnding);
-            await file_to_delete.DeleteAsync();
-            file_to_delete = await dataFolder.GetFileAsync("Benutzer" + dbFileEnding);
-            await file_to_delete.DeleteAsync();
-            file_to_delete = await dataFolder.GetFileAsync("Baumart" + dbFileEnding);
-            await file_to_delete.DeleteAsync();
+
+            //var file_to_delete = await dataFolder.GetFileAsync("Projekte" + dbFileEnding);
+            //await file_to_delete.DeleteAsync();
+            //file_to_delete = await dataFolder.GetFileAsync("Benutzer" + dbFileEnding);
+            //await file_to_delete.DeleteAsync();
+            //file_to_delete = await dataFolder.GetFileAsync("Baumart" + dbFileEnding);
+            //await file_to_delete.DeleteAsync();
 
 
             var files_to_delete = await arbeitsDBFolder.GetFilesAsync();
@@ -559,8 +559,8 @@ namespace Baumkontrollen
 
         }
 
-        //Kopiert eine Datei vom internen speicher in den internen Speiceher
-        public async void copy_arbeitsDB_to_internal(string projektname)
+        //Kopiert eine Datei von der SD Karte in den internen Speiceher
+        public async Task<List<Baumart[]>> copy_DB_to_internal(string projektname)
         {
             //Zugriff auf die SD-Karte erstellen
             StorageFolder sdCard = (await KnownFolders.RemovableDevices.GetFoldersAsync()).FirstOrDefault();
@@ -568,26 +568,158 @@ namespace Baumkontrollen
             StorageFolder dataFolder_on_sd = await sdCard.CreateFolderAsync("ProBaumkontrollen", CreationCollisionOption.OpenIfExists);
 
             var file_arbeitsDB = await dataFolder_on_sd.GetFileAsync(projektname + dbFileEnding);
-
-            await file_arbeitsDB.CopyAsync(arbeitsDBFolder, file_arbeitsDB.Name, NameCollisionOption.ReplaceExisting);
-
+                        
             SQLiteConnection connection_to_projekteDB = connectToProjektDB();
 
             List<Projekt> list_projekt_vorhanden = connection_to_projekteDB.Query<Projekt>("SELECT * FROM tabProjekt WHERE Name=?",projektname);
 
+            List<Baumart[]> list_problem_baumarten = new List<Baumart[]>();
+
             if (list_projekt_vorhanden.Count>0)
             {
                 //Irgendwas machen, dass die Beiden Datenbanken zusammenführt
+                MessageDialog message_db_vorhanden = new MessageDialog("Die zu kopierende Datenbank existiert bereits. Prüfen sie ob die Version auf der SD-Karte, oder die im Handyspeicher aktueller ist. Wenn sie fortfahren, wird die interne Datenbank mit der von der SD-Karte überschrieben./n Soll die Interne Datenbank überschrieben werden?", "Warnung");
+                message_db_vorhanden.Commands.Add(new UICommand("Ja"));
+                message_db_vorhanden.Commands.Add(new UICommand("Nein"));
+
+                var command = await message_db_vorhanden.ShowAsync();
+
+                switch (command.Label)
+                {
+                    case "Ja":
+                        //Löschen der internen Datenbank
+                        deleteArbeitsDB(projektname);
+
+                        //Anlegen des Projekts und kopieren der Datei
+                        Projekt projekt = new Projekt();
+                        projekt.Name = projektname;
+                        connection_to_projekteDB.Insert(projekt);
+                        await file_arbeitsDB.CopyAsync(arbeitsDBFolder, file_arbeitsDB.Name, NameCollisionOption.ReplaceExisting);
+                        //Zusammenführen der Baumarten
+                        list_problem_baumarten = merge_baumarten(projektname);
+                        break;
+                    case "Nein":
+                        break;
+                    default:
+                        break;
+                }
             }
             else
             {
+
+                //Anlegen des Projekts und kopieren der Datei
                 Projekt projekt = new Projekt();
                 projekt.Name = projektname;
-                connection_to_projekteDB.Insert(projekt);
-                
+                connection_to_projekteDB.Insert(projekt);             
+                await file_arbeitsDB.CopyAsync(arbeitsDBFolder, file_arbeitsDB.Name, NameCollisionOption.ReplaceExisting);
+                //Zusammenführen der Baumarten
+                list_problem_baumarten = merge_baumarten(projektname);
             }
 
             connection_to_projekteDB.Close();
+            return list_problem_baumarten;
         }
+
+        //Organisiert das zusammenführen der Baumarten daten, projektname ist der Name des Projektes auf der SD
+        private List<Baumart[]> merge_baumarten(string projektname)
+        {
+            //Liste aller Baumarten der DB von der SD
+            SQLiteConnection connection_to_DB_from_SD=connectToArbeitsDB(projektname);
+            List<Baumart> list_baumarten_sd = connection_to_DB_from_SD.Table<Baumart>().ToList();
+            
+            //Liste aller Baumarten intern
+            SQLiteConnection conection_to_baumartDB=connectToBaumartDB();
+            List<Baumart> list_baumarten_internal = conection_to_baumartDB.Table<Baumart>().ToList();
+
+            //Liste aller BAumarten, die ohne Bearbeitung hinzugefügt werden können
+            List<Baumart> list_baumarten_to_add = new List<Baumart>();
+            foreach (var baumart in list_baumarten_sd)
+            {
+                list_baumarten_to_add.Add(baumart);
+            }
+            
+            //Liste mit allen Baumarten die Bearbeitung brauchen
+            List<Baumart[]> list_problem_baumarten = new List<Baumart[]>();
+            
+            Baumart[] array_baumart = new Baumart[2];
+            foreach (var baumart in list_baumarten_sd)
+            {
+                if (list_baumarten_internal.Exists(x => x.NameBotanisch == baumart.NameBotanisch)&&baumart.NameBotanisch.Length!=0)
+                {
+                    Baumart baumart_internal = list_baumarten_internal.Find(x => x.NameBotanisch == baumart.NameBotanisch);
+
+                    if (baumart_internal.NameDeutsch==baumart.NameDeutsch)
+                    {
+                        list_baumarten_to_add.Remove(baumart);
+                    }
+                    else
+                    {
+                        array_baumart[0] = baumart;
+                        array_baumart[1] = baumart_internal;
+
+                        list_problem_baumarten.Add(array_baumart);
+                        list_baumarten_to_add.Remove(baumart);
+                    }
+
+                }
+                else if (list_baumarten_internal.Exists(x => x.NameDeutsch == baumart.NameDeutsch)&&baumart.NameDeutsch.Length!=0)
+                {
+                    Baumart baumart_internal = list_baumarten_internal.Find(x => x.NameDeutsch == baumart.NameDeutsch);
+                    if (baumart_internal.NameBotanisch==baumart.NameBotanisch)
+                    {
+                        list_baumarten_to_add.Remove(baumart);
+                    }
+                    else
+                    {
+                        array_baumart[0] = baumart;
+                        array_baumart[1] = baumart_internal;
+
+                        list_problem_baumarten.Add(array_baumart);
+                        list_baumarten_to_add.Remove(baumart);
+                    }
+                }               
+           }
+
+            //Hinzufügen aller Baumarten die keiner Bearbeitung bedürfen zur internen DB
+            add_baumarten_list_to_db(list_baumarten_to_add);
+
+            return list_problem_baumarten;
+        }
+
+        private void add_baumart_to_db(Baumart baumart)
+        {
+            SQLiteConnection connection_to_baumart_db = connectToBaumartDB();
+            connection_to_baumart_db.Insert(baumart);
+            connection_to_baumart_db.Close();
+        }
+
+        private void add_baumarten_list_to_db(List<Baumart> list_baumarten)
+        {
+            SQLiteConnection connection_to_baumart_db = connectToBaumartDB();
+            foreach (var baumart in list_baumarten)
+            {
+                connection_to_baumart_db.Insert(baumart);
+            }           
+            connection_to_baumart_db.Close();
+        }
+        //Gibt eine Liste aller Datenbanken auf der SD Karte zurück
+        public async Task<IReadOnlyList<StorageFile>> get_db_from_sd()
+        {
+            //Zugriff auf die SD-Karte erstellen
+            StorageFolder sdCard = (await KnownFolders.RemovableDevices.GetFoldersAsync()).FirstOrDefault();
+            //Ordner ProBaumkontrollen erstellen bzw. Öffnen
+            StorageFolder dataFolder_on_sd = await sdCard.CreateFolderAsync("ProBaumkontrollen", CreationCollisionOption.OpenIfExists);
+
+            IReadOnlyList<StorageFile> db_list = await dataFolder_on_sd.GetFilesAsync();
+            return db_list;
+        }
+
+        //Gibt eine Liste aller Datenbanken im internen Speicher zurück
+        public async Task<IReadOnlyList<StorageFile>> get_db_from_internal()
+        {
+            IReadOnlyList<StorageFile> db_list = await arbeitsDBFolder.GetFilesAsync();
+            return db_list;
+        }
+
     }
 }

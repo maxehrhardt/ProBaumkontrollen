@@ -220,7 +220,7 @@ namespace Baumkontrollen
             border_baumart_hinzufügen.Visibility = Visibility.Visible;
         }
 
-        private void button_baumart_hinzufügen_bestätigen_Click(object sender, RoutedEventArgs e)
+        private async void button_baumart_hinzufügen_bestätigen_Click(object sender, RoutedEventArgs e)
         {
             if ((textbox_baumart_deutsch.Text == "") && (textbox_baumart_botanisch.Text == ""))
             {
@@ -234,20 +234,30 @@ namespace Baumkontrollen
                     NameDeutsch = textbox_baumart_deutsch.Text
                 };
 
-                connection_to_baumartDB.Insert(baumart);
-                connection_to_arbeitsDB.Insert(baumart);
+                if (connection_to_baumartDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE NameBotanisch=? AND NameDeutsch=?", baumart.NameBotanisch, baumart.NameDeutsch).Count()==0)
+                {
+                    connection_to_baumartDB.Insert(baumart);
+                    connection_to_arbeitsDB.Insert(baumart);
 
 
 
-                autotext_baumart_deutsch.Visibility = Visibility.Visible;
-                autotext_baumart_botanisch.Visibility = Visibility.Visible;
-                button_baumart_hinzufügen.Visibility = Visibility.Visible;
+                    autotext_baumart_deutsch.Visibility = Visibility.Visible;
+                    autotext_baumart_botanisch.Visibility = Visibility.Visible;
+                    button_baumart_hinzufügen.Visibility = Visibility.Visible;
 
-                update_autotext_baumart();
+                    update_autotext_baumart();
 
-                textbox_baumart_botanisch.Text = "";
-                textbox_baumart_deutsch.Text = "";
-                border_baumart_hinzufügen.Visibility = Visibility.Collapsed;
+                    textbox_baumart_botanisch.Text = "";
+                    textbox_baumart_deutsch.Text = "";
+                    border_baumart_hinzufügen.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    MessageDialog message = new MessageDialog("Diese Baumart ist bereits in der Datenbank vorhanden!");
+                    await message.ShowAsync();
+                }
+
+
             }
 
         }
@@ -305,7 +315,7 @@ namespace Baumkontrollen
         {
             if (args.Reason==AutoSuggestionBoxTextChangeReason.UserInput)
             {
-                List<Baumart> alle_baumarten = connection_to_arbeitsDB.Table<Baumart>().ToList();
+                List<Baumart> alle_baumarten = connection_to_baumartDB.Table<Baumart>().ToList();
                 List<string> gefilterte_baumarten = new List<string>();
 
                 string benutzereingabe = autotext_baumart_deutsch.Text;
@@ -337,7 +347,7 @@ namespace Baumkontrollen
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
-                List<Baumart> alle_baumarten = connection_to_arbeitsDB.Table<Baumart>().ToList();
+                List<Baumart> alle_baumarten = connection_to_baumartDB.Table<Baumart>().ToList();
                 List<string> gefilterte_baumarten = new List<string>();
 
                 string benutzereingabe = autotext_baumart_botanisch.Text;
@@ -627,8 +637,16 @@ namespace Baumkontrollen
                 
                 if (autotext_baumart_deutsch.Text != "")
                 {
+                    List<Baumart> list_baum_in_baumart_db = connection_to_baumartDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE NameDeutsch=?", autotext_baumart_deutsch.Text);
                     List<Baumart> list_ausgewählte_baumart = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE NameDeutsch=?", autotext_baumart_deutsch.Text);
-                    if (list_ausgewählte_baumart.Count != 0)
+                    if (list_ausgewählte_baumart.Count==0&&list_baum_in_baumart_db.Count!=0)
+                    {
+                        //Wenn der Baum in der internen Datenbank ist, aber nicht in der Tabelle der ArbeitsDB muss dieser erst hinzugefügt werden
+                        connection_to_arbeitsDB.Insert(list_baum_in_baumart_db.ElementAt(0));
+                        list_ausgewählte_baumart = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE NameDeutsch=?", autotext_baumart_deutsch.Text);
+                        Baumart ausgewählte_baumart = list_ausgewählte_baumart.ElementAt(0);
+                        baum.baumartId = ausgewählte_baumart.ID;
+                    }else if (list_ausgewählte_baumart.Count != 0)
                     {
                         Baumart ausgewählte_baumart = list_ausgewählte_baumart.ElementAt(0);
                         baum.baumartId = ausgewählte_baumart.ID;
@@ -643,8 +661,17 @@ namespace Baumkontrollen
                 {
                     if (autotext_baumart_botanisch.Text != "")
                     {
+                        List<Baumart> list_baum_in_baumart_db = connection_to_baumartDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE NameDeutsch=?", autotext_baumart_botanisch.Text);
                         List<Baumart> list_ausgewählte_baumart = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE NameBotanisch=?", autotext_baumart_botanisch.Text);
-                        if (list_ausgewählte_baumart.Count != 0)
+                        if (list_ausgewählte_baumart.Count == 0 && list_baum_in_baumart_db.Count != 0)
+                        {
+                            //Wenn der Baum in der internen Datenbank ist, aber nicht in der Tabelle der ArbeitsDB muss dieser erst hinzugefügt werden
+                            connection_to_arbeitsDB.Insert(list_baum_in_baumart_db.ElementAt(0));
+                            list_ausgewählte_baumart = connection_to_arbeitsDB.Query<Baumart>("SELECT * FROM tabBaumart WHERE NameBotanisch=?", autotext_baumart_botanisch.Text);
+                            Baumart ausgewählte_baumart = list_ausgewählte_baumart.ElementAt(0);
+                            baum.baumartId = ausgewählte_baumart.ID;
+                        }
+                        else if (list_ausgewählte_baumart.Count != 0)
                         {
                             Baumart ausgewählte_baumart = list_ausgewählte_baumart.ElementAt(0);
                             baum.baumartId = ausgewählte_baumart.ID;

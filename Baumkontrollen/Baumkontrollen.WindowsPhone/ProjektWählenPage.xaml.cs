@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Navigation;
 
 using SQLite;
 using Windows.Phone.UI.Input;
+using Windows.Storage;
 
 namespace Baumkontrollen
 {
@@ -56,6 +57,37 @@ namespace Baumkontrollen
 
             //Auslesen aller Benutzer und Projekte in der jeweiligen Datenbank und hinzufügen dieser zu dem Anzeigeelement
             List<Projekt> liste_projekte = connection_to_projekteDB.Table<Projekt>().ToList();
+            //List<String> list_projekte_string = liste_projekte.Select(projekt => (projekt as Projekt).Name).ToList();
+
+            //IReadOnlyList<StorageFile> internal_db_list = await dbVerwalter.get_db_from_internal();
+            //List<String> list_internal_db_names = internal_db_list.Select(db => (db as StorageFile).Name).ToList();
+
+            //List<String> list_problem_projekte = list_projekte_string.Except(list_internal_db_names).ToList();
+
+            //if (list_problem_projekte.Count!=0)
+            //{
+            //    foreach (var projekt in list_problem_projekte)
+            //    {
+            //        connection_to_projekteDB.Delete<Projekt>(projekt);
+            //    }
+            //}
+            //else 
+            //{
+            //    list_problem_projekte = list_internal_db_names.Except(list_projekte_string).ToList();
+            //    if (list_problem_projekte.Count!=0)
+            //    {
+            //        foreach (var problem_projekt in list_problem_projekte)
+            //        {
+            //            Projekt projekt=new Projekt();
+            //            projekt.Name=problem_projekt.Remove(problem_projekt.Length-7);
+            //            projekt.Aktiv=false;
+            //            connection_to_projekteDB.Insert(projekt);
+            //        }
+            //    }
+            //}
+
+            //liste_projekte = connection_to_projekteDB.Table<Projekt>().ToList();
+            
             foreach (var Projekt in liste_projekte)
             {
                 combo_projekt.Items.Add(Projekt.Name);

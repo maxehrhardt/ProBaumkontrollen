@@ -40,6 +40,9 @@ namespace Baumkontrollen
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
             HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+
+            
+
         }
 
         void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
@@ -59,13 +62,16 @@ namespace Baumkontrollen
         /// <param name="e">Ereignisdaten, die beschreiben, wie diese Seite erreicht wurde.
         /// Dieser Parameter wird normalerweise zum Konfigurieren der Seite verwendet.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
+        {           
             //Verbindung zu den Datenbanken: Benutzer und Projekt aufbauen
             connection_to_projekteDB = dbVerwalter.connectToProjektDB();
             connection_to_benutzerDB = dbVerwalter.connectToBenutzerDB();
 
-            //Überprüfen ob die ProjektDb aktuell ist
-            //dbVerwalter.copy_arbeitsDB_to_internal("Zwickau Kunz");
+            //dbVerwalter.deleteAllDB();
+            //connection_to_projekteDB.Delete<Projekt>("Kurpark Bad Lauchstädt");
+            //connection_to_projekteDB.Delete<Projekt>("Test");
+            //connection_to_projekteDB.Delete<Projekt>("Testi");
+            //connection_to_projekteDB.Delete<Projekt>("Test2");
 
             //Die Werte der Projekt und Benutzer Textbox müssen zurückgesetzt werden.
             textblock_aktuelles_projekt.Text = "";
@@ -385,6 +391,7 @@ namespace Baumkontrollen
 
         private void button_db_importieren_Click(object sender, RoutedEventArgs e)
         {
+            this.Frame.Navigate(typeof(DbImportierenPage));
             //dbVerwalter.copy_arbeitsDB_to_internal("Kurpark Bad Lauchstädt");           
         }
 

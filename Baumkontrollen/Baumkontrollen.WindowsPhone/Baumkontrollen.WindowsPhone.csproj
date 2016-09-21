@@ -86,13 +86,19 @@
     <SDKReference Include="Microsoft.VCLibs, version=12.0">
       <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Phone</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.WP81, Version=3.8.8.3">
-      <Name>SQLite for Windows Phone 8.1</Name>
+    <SDKReference Include="SQLite.WP81, Version=3.14.1">
+      <Name>SQLite for Windows Phone 8.1 %28SQLite.WP81, Version=3.14.1%29</Name>
+    </SDKReference>
+    <SDKReference Include="TestPlatform, Version=14.0">
+      <Name>Microsoft Visual Studio Test Core</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AufgenommeneBäumePage.xaml.cs">
       <DependentUpon>AufgenommeneBäumePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DbImportierenPage.xaml.cs">
+      <DependentUpon>DbImportierenPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="BaumBearbeitenPage.xaml.cs">
       <DependentUpon>BaumBearbeitenPage.xaml</DependentUpon>
@@ -101,6 +107,10 @@
       <DependentUpon>BaumkontrollenPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="KontrollePage.xaml.cs">
       <DependentUpon>KontrollePage.xaml</DependentUpon>
     </Compile>
@@ -130,6 +140,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="AufgenommeneBäumePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DbImportierenPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
