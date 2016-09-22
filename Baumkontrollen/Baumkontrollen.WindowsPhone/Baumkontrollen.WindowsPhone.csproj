@@ -111,6 +111,9 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="InterneDbBearbeitenPage.xaml.cs">
+      <DependentUpon>InterneDbBearbeitenPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="KontrollePage.xaml.cs">
       <DependentUpon>KontrollePage.xaml</DependentUpon>
     </Compile>
@@ -152,6 +155,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BaumkontrollenPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InterneDbBearbeitenPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

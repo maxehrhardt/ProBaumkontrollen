@@ -28,7 +28,7 @@
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Aktueller Benutzer: " FontSize="18" Foreground="Gray"/>
                 <TextBlock x:Name="textblock_aktueller_benutzer" Grid.Column="1" Grid.Row="1"  TextAlignment="Left" FontSize="20" TextWrapping="Wrap" HorizontalAlignment="Left"/>
             </Grid>
-            <ScrollViewer Height="470">
+            <ScrollViewer Height="470" VerticalScrollBarVisibility="Visible">
                 <StackPanel Height="auto">
                     <Button x:Name="button_projektWählen"   HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="189" Height="auto" Click="button_projektWählen_Click">
                         <TextBlock Text="Projekt/Benutzer wählen" TextWrapping="Wrap" TextAlignment="Center"/>
@@ -104,9 +104,13 @@
                     </Button>
 
                     <Button x:Name="button_db_importieren" HorizontalAlignment="Center" Width="189" Height="auto" Click="button_db_importieren_Click" Visibility="Visible">
-                        <TextBlock Text="DB importieren" TextWrapping="Wrap" TextAlignment="Center" />
+                        <TextBlock Text="Datenbank von SD importieren" TextWrapping="Wrap" TextAlignment="Center" />
                     </Button>
 
+                    <Button x:Name="button_interne_dbs_bearbeiten" HorizontalAlignment="Center" Width="189" Height="auto"  Visibility="Visible" Click="button_interne_dbs_bearbeiten_Click">
+                        <TextBlock Text="Interne Datenbanken bearbeiten" TextWrapping="Wrap" TextAlignment="Center" />
+                    </Button>
+                    
                     <Button x:Name="button_errorLog" HorizontalAlignment="Center" Width="189" Height="auto"  Visibility="Visible" Click="button_errorLog_Click">
                         <TextBlock Text="Error Log" TextWrapping="Wrap" TextAlignment="Center" />
                     </Button>

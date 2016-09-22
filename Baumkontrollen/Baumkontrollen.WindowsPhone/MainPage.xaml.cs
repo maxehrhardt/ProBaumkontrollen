@@ -409,6 +409,11 @@ namespace Baumkontrollen
 
         }
 
+        private void button_interne_dbs_bearbeiten_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(InterneDbBearbeitenPage));
+        }
+
 
 
         
