@@ -702,6 +702,7 @@ namespace Baumkontrollen
             }           
             connection_to_baumart_db.Close();
         }
+
         //Gibt eine Liste aller Datenbanken auf der SD Karte zurück
         public async Task<IReadOnlyList<StorageFile>> get_db_from_sd()
         {
@@ -721,5 +722,34 @@ namespace Baumkontrollen
             return db_list;
         }
 
+        public void remove_null_from_dbs(string projektname)
+        {
+           SQLiteConnection hilfs_connection = connectToArbeitsDB(projektname);
+
+           List<Kontrolle> list_alle_kontrollen = hilfs_connection.Table<Kontrolle>().ToList();
+           foreach (var kontrolle in list_alle_kontrollen)
+           {
+               if (kontrolle.kronenzustandSonstiges==null)
+               {
+                   kontrolle.kronenzustandSonstiges = "";
+               }
+               if (kontrolle.stammzustandSonstiges == null)
+               {
+                   kontrolle.stammzustandSonstiges = "";
+               }
+               if (kontrolle.wurzelzustandSonstiges == null)
+               {
+                   kontrolle.wurzelzustandSonstiges = "";
+               }
+               if (kontrolle.maßnahmenSonstiges==null)
+               {
+                   kontrolle.maßnahmenSonstiges = "";
+               }
+
+               hilfs_connection.Update(kontrolle);
+           }
+
+           hilfs_connection.Close();
+        }
     }
 }

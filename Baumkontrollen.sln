@@ -1,21 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Express 2013 for Windows
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Baumkontrollen", "Baumkontrollen", "{9F18FE86-CE26-47E1-9494-00C3E1AF5425}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Baumkontrollen.Shared", "Baumkontrollen\Baumkontrollen.Shared\Baumkontrollen.Shared.shproj", "{678C763F-7B45-4DA7-B14B-420AC1D55A92}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baumkontrollen.Windows", "Baumkontrollen\Baumkontrollen.Windows\Baumkontrollen.Windows.csproj", "{B0B204D6-505A-43EA-AA9C-1E5B0A462E41}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EC7C08F8-9914-46A7-A48D-ABD9A821786D} = {EC7C08F8-9914-46A7-A48D-ABD9A821786D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baumkontrollen.WindowsPhone", "Baumkontrollen\Baumkontrollen.WindowsPhone\Baumkontrollen.WindowsPhone.csproj", "{EC7C08F8-9914-46A7-A48D-ABD9A821786D}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Baumkontrollen\Baumkontrollen.Shared\Baumkontrollen.Shared.projitems*{678c763f-7b45-4da7-b14b-420ac1d55a92}*SharedItemsImports = 13
-		Baumkontrollen\Baumkontrollen.Shared\Baumkontrollen.Shared.projitems*{b0b204d6-505a-43ea-aa9c-1e5b0a462e41}*SharedItemsImports = 4
 		Baumkontrollen\Baumkontrollen.Shared\Baumkontrollen.Shared.projitems*{ec7c08f8-9914-46a7-a48d-abd9a821786d}*SharedItemsImports = 4
+		Baumkontrollen\Baumkontrollen.Shared\Baumkontrollen.Shared.projitems*{b0b204d6-505a-43ea-aa9c-1e5b0a462e41}*SharedItemsImports = 4
+		Baumkontrollen\Baumkontrollen.Shared\Baumkontrollen.Shared.projitems*{678c763f-7b45-4da7-b14b-420ac1d55a92}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

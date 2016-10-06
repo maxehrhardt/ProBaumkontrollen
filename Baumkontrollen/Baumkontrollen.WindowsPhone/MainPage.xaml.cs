@@ -147,6 +147,8 @@ namespace Baumkontrollen
             }
             foreach (var projekt in list_alle_projekte)
             {
+                dbVerwalter.remove_null_from_dbs(projekt.Name);
+
                 hilfs_connection = dbVerwalter.connectToArbeitsDB(projekt.Name);
                 
                 hilfs_connection.CreateTable<Kontrolle>();

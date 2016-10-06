@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="14912maxe.ProBaumkontrollen" Publisher="CN=B5BAAFC8-9326-45FE-9036-C725E4736D3D" Version="2.1.1.0" />
+  <Identity Name="14912maxe.ProBaumkontrollen" Publisher="CN=B5BAAFC8-9326-45FE-9036-C725E4736D3D" Version="2.2.0.2" />
   <mp:PhoneIdentity PhoneProductId="b0fbade0-a53b-433e-b6aa-f0318df6e19d" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>ProBaumkontrollen</DisplayName>
@@ -50,7 +50,6 @@
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="internetClientServer" />
     <Capability Name="removableStorage" />
   </Capabilities>
 </Package>

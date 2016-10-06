@@ -107,7 +107,7 @@
                         <TextBlock Text="Datenbank von SD importieren" TextWrapping="Wrap" TextAlignment="Center" />
                     </Button>
 
-                    <Button x:Name="button_interne_dbs_bearbeiten" HorizontalAlignment="Center" Width="189" Height="auto"  Visibility="Visible" Click="button_interne_dbs_bearbeiten_Click">
+                    <Button x:Name="button_interne_dbs_bearbeiten" HorizontalAlignment="Center" Width="189" Height="auto"  Visibility="Collapsed" Click="button_interne_dbs_bearbeiten_Click">
                         <TextBlock Text="Interne Datenbanken bearbeiten" TextWrapping="Wrap" TextAlignment="Center" />
                     </Button>
                     
